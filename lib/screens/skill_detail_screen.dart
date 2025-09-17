@@ -190,15 +190,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
                 ),
               ],
             ),
-            child: widget.skill.icon.endsWith('.svg')
-                ? SvgPicture.asset(
-                    widget.skill.icon,
-                    colorFilter: ColorFilter.mode(
-                      colorScheme.primary,
-                      BlendMode.srcIn,
-                    ),
-                  )
-                : Image.asset(widget.skill.icon, fit: BoxFit.contain),
+            child: _buildSkillIcon(colorScheme),
           ),
           const SizedBox(height: 24),
 
@@ -418,6 +410,30 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
         ],
       ),
     );
+  }
+
+  Widget _buildSkillIcon(ColorScheme colorScheme) {
+    switch (widget.skill.iconType) {
+      case IconType.svg:
+        return SvgPicture.asset(
+          widget.skill.icon as String,
+          colorFilter: ColorFilter.mode(
+            colorScheme.primary,
+            BlendMode.srcIn,
+          ),
+        );
+      case IconType.image:
+        return Image.asset(
+          widget.skill.icon as String,
+          fit: BoxFit.contain,
+        );
+      case IconType.materialIcon:
+        return Icon(
+          widget.skill.icon as IconData,
+          color: colorScheme.primary,
+          size: 48,
+        );
+    }
   }
 
   Widget _buildActionButtons(ColorScheme colorScheme, TextTheme textTheme) {

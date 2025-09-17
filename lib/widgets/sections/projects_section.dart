@@ -41,7 +41,11 @@ class ProjectsSection extends StatelessWidget {
                       color: colorScheme.tertiary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(Icons.work, color: colorScheme.tertiary, size: 28),
+                    child: Icon(
+                      Icons.work,
+                      color: colorScheme.tertiary,
+                      size: 28,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(

@@ -364,7 +364,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           duration: const Duration(milliseconds: 1000),
                           slideOffset: const Offset(0, 60),
                           child: _buildSectionContainer(
-                            style: SectionStyle.alternate,
+                            style: SectionStyle.normal,
                             colorScheme: colorScheme,
                             child: AboutSection(
                               key: _aboutKey,
@@ -384,7 +384,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           duration: const Duration(milliseconds: 1200),
                           slideOffset: const Offset(0, 60),
                           child: _buildSectionContainer(
-                            style: SectionStyle.elevated,
+                            style: SectionStyle.normal,
                             colorScheme: colorScheme,
                             child: SkillsSection(key: _skillsKey),
                           ),

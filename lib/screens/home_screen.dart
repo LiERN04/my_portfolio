@@ -818,36 +818,26 @@ class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
                 // Section labels (positioned absolutely to not affect bar position)
                 Positioned(
                   right: 12, // Position just to the left of the bar
-                  child: AnimatedOpacity(
-                    opacity: _isHovered ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 400),
-                    child: _isHovered
-                        ? Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 4,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: widget.colorScheme.surface.withValues(
-                                alpha: 0.9,
-                              ),
-                              borderRadius: BorderRadius.circular(6),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: widget.colorScheme.shadow.withValues(
-                                    alpha: 0.1,
-                                  ),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                  child: TweenAnimationBuilder<double>(
+                    duration: const Duration(milliseconds: 600),
+                    curve: _isHovered
+                        ? Curves.easeOutCubic
+                        : Curves.easeInCubic,
+                    tween: Tween(begin: 0.0, end: _isHovered ? 1.0 : 0.0),
+                    builder: (context, value, child) {
+                      return AnimatedOpacity(
+                        opacity: value,
+                        duration: const Duration(milliseconds: 300),
+                        child: value > 0.01
+                            ? Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 4,
+                                  vertical: 2,
                                 ),
-                              ],
-                            ),
-                            child: TweenAnimationBuilder<double>(
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeOutCubic,
-                              tween: Tween(begin: 0.0, end: 1.0),
-                              builder: (context, value, child) {
-                                return Transform.translate(
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
+                                child: Transform.translate(
                                   offset: Offset(30 * (1 - value), 0),
                                   child: Opacity(
                                     opacity: value,
@@ -859,74 +849,22 @@ class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
                                         bool isActive =
                                             section['id'] ==
                                             widget.currentSection;
-                                        return GestureDetector(
+                                        return _HoverableSection(
+                                          section: section,
+                                          isActive: isActive,
                                           onTap: () => widget.onSectionTap(
                                             section['id']!,
                                           ),
-                                          child: MouseRegion(
-                                            cursor: SystemMouseCursors.click,
-                                            child: Container(
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                    vertical: 1,
-                                                  ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 6,
-                                                    vertical: 2,
-                                                  ),
-                                              decoration: BoxDecoration(
-                                                color: isActive
-                                                    ? widget.colorScheme.primary
-                                                          .withValues(
-                                                            alpha: 0.1,
-                                                          )
-                                                    : Colors.transparent,
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                border: isActive
-                                                    ? Border.all(
-                                                        color: widget
-                                                            .colorScheme
-                                                            .primary
-                                                            .withValues(
-                                                              alpha: 0.3,
-                                                            ),
-                                                        width: 1,
-                                                      )
-                                                    : null,
-                                              ),
-                                              child: Text(
-                                                section['name']!,
-                                                style: TextStyle(
-                                                  color: isActive
-                                                      ? widget
-                                                            .colorScheme
-                                                            .primary
-                                                      : widget
-                                                            .colorScheme
-                                                            .onSurface
-                                                            .withValues(
-                                                              alpha: 0.7,
-                                                            ),
-                                                  fontSize: 11,
-                                                  fontWeight: isActive
-                                                      ? FontWeight.w600
-                                                      : FontWeight.w400,
-                                                ),
-                                                textAlign: TextAlign.right,
-                                              ),
-                                            ),
-                                          ),
+                                          colorScheme: widget.colorScheme,
                                         );
                                       }).toList(),
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                          )
-                        : const SizedBox.shrink(),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                      );
+                    },
                   ),
                 ),
 
@@ -1026,5 +964,71 @@ class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
     targetIndex = targetIndex.clamp(0, sections.length - 1);
 
     widget.onSectionTap(sections[targetIndex]['id']!);
+  }
+}
+
+class _HoverableSection extends StatefulWidget {
+  final Map<String, String> section;
+  final bool isActive;
+  final VoidCallback onTap;
+  final ColorScheme colorScheme;
+
+  const _HoverableSection({
+    required this.section,
+    required this.isActive,
+    required this.onTap,
+    required this.colorScheme,
+  });
+
+  @override
+  State<_HoverableSection> createState() => _HoverableSectionState();
+}
+
+class _HoverableSectionState extends State<_HoverableSection>
+    with SingleTickerProviderStateMixin {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: AnimatedScale(
+          scale: _isHovered ? 1.15 : 1.0,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutCubic,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 1),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: widget.isActive
+                  ? widget.colorScheme.primary.withValues(alpha: 0.1)
+                  : Colors.transparent,
+              borderRadius: BorderRadius.circular(4),
+              border: widget.isActive
+                  ? Border.all(
+                      color: widget.colorScheme.primary.withValues(alpha: 0.3),
+                      width: 1,
+                    )
+                  : null,
+            ),
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200),
+              style: TextStyle(
+                color: widget.isActive
+                    ? widget.colorScheme.primary
+                    : widget.colorScheme.onSurface.withValues(alpha: 0.7),
+                fontSize: _isHovered ? 12 : 11,
+                fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
+              ),
+              child: Text(widget.section['name']!, textAlign: TextAlign.right),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

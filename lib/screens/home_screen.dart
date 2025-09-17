@@ -810,79 +810,127 @@ class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
           }
 
           return Container(
+            width: 100, // Give enough width for labels + bar
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
+              alignment: Alignment.centerRight,
               children: [
-                // Section labels (shown on hover)
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeOutCubic,
-                  width: _isHovered ? 80 : 0,
+                // Section labels (positioned absolutely to not affect bar position)
+                Positioned(
+                  right: 12, // Position just to the left of the bar
                   child: AnimatedOpacity(
                     opacity: _isHovered ? 1.0 : 0.0,
                     duration: const Duration(milliseconds: 400),
                     child: _isHovered
-                        ? Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: sections.map((section) {
-                              bool isActive =
-                                  section['id'] == widget.currentSection;
-                              return GestureDetector(
-                                onTap: () =>
-                                    widget.onSectionTap(section['id']!),
-                                child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Container(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 1,
-                                    ),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: isActive
-                                          ? widget.colorScheme.primary
-                                                .withValues(alpha: 0.1)
-                                          : Colors.transparent,
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: isActive
-                                          ? Border.all(
-                                              color: widget.colorScheme.primary
-                                                  .withValues(alpha: 0.3),
-                                              width: 1,
-                                            )
-                                          : null,
-                                    ),
-                                    child: Text(
-                                      section['name']!,
-                                      style: TextStyle(
-                                        color: isActive
-                                            ? widget.colorScheme.primary
-                                            : widget.colorScheme.onSurface
-                                                  .withValues(alpha: 0.7),
-                                        fontSize: 11,
-                                        fontWeight: isActive
-                                            ? FontWeight.w600
-                                            : FontWeight.w400,
-                                      ),
-                                      textAlign: TextAlign.right,
+                        ? Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: widget.colorScheme.surface.withValues(
+                                alpha: 0.9,
+                              ),
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: widget.colorScheme.shadow.withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: TweenAnimationBuilder<double>(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeOutCubic,
+                              tween: Tween(begin: 0.0, end: 1.0),
+                              builder: (context, value, child) {
+                                return Transform.translate(
+                                  offset: Offset(30 * (1 - value), 0),
+                                  child: Opacity(
+                                    opacity: value,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: sections.map((section) {
+                                        bool isActive =
+                                            section['id'] ==
+                                            widget.currentSection;
+                                        return GestureDetector(
+                                          onTap: () => widget.onSectionTap(
+                                            section['id']!,
+                                          ),
+                                          child: MouseRegion(
+                                            cursor: SystemMouseCursors.click,
+                                            child: Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                    vertical: 1,
+                                                  ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 6,
+                                                    vertical: 2,
+                                                  ),
+                                              decoration: BoxDecoration(
+                                                color: isActive
+                                                    ? widget.colorScheme.primary
+                                                          .withValues(
+                                                            alpha: 0.1,
+                                                          )
+                                                    : Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                border: isActive
+                                                    ? Border.all(
+                                                        color: widget
+                                                            .colorScheme
+                                                            .primary
+                                                            .withValues(
+                                                              alpha: 0.3,
+                                                            ),
+                                                        width: 1,
+                                                      )
+                                                    : null,
+                                              ),
+                                              child: Text(
+                                                section['name']!,
+                                                style: TextStyle(
+                                                  color: isActive
+                                                      ? widget
+                                                            .colorScheme
+                                                            .primary
+                                                      : widget
+                                                            .colorScheme
+                                                            .onSurface
+                                                            .withValues(
+                                                              alpha: 0.7,
+                                                            ),
+                                                  fontSize: 11,
+                                                  fontWeight: isActive
+                                                      ? FontWeight.w600
+                                                      : FontWeight.w400,
+                                                ),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
                                     ),
                                   ),
-                                ),
-                              );
-                            }).toList(),
+                                );
+                              },
+                            ),
                           )
                         : const SizedBox.shrink(),
                   ),
                 ),
 
-                const SizedBox(width: 8),
-
-                // Progress bar
+                // Progress bar (positioned at the right edge)
                 GestureDetector(
                   onTapDown: (details) => _handleTap(details, progress),
                   child: Container(

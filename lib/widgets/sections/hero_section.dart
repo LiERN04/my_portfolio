@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../services/url_launcher_service.dart';
 
 class HeroSection extends StatefulWidget {
@@ -22,11 +23,9 @@ class _HeroSectionState extends State<HeroSection>
   late Animation<double> _colorAnimation;
 
   final List<String> _techTitles = [
-    'FullStack Developer',
-    'Flutter Enthusiast',
-    'Mobile App Creator',
-    'Web Developer',
-    'Tech Innovator',
+    'FullStack_Developer_',
+    'Mobile_App_Creator_',
+    'Web_Developer_',
   ];
 
   final List<String> _skills = [
@@ -150,59 +149,86 @@ class _HeroSectionState extends State<HeroSection>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Main name with animated gradient effect
-                AnimatedBuilder(
-                  animation: _colorAnimation,
-                  builder: (context, child) {
-                    return ShaderMask(
-                      shaderCallback: (bounds) {
-                        final progress = _colorAnimation.value;
+                // Main name with mixed static and animated text
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Static "Hi, I'm" - theme aware
+                    Text(
+                      'Hi, I\'m ',
+                      style: ResponsiveValue(
+                        context,
+                        conditionalValues: [
+                          Condition.smallerThan(
+                            name: TABLET,
+                            value: textTheme.displaySmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onSurface,
+                              fontSize: 48.0,
+                            ),
+                          ),
+                        ],
+                        defaultValue: textTheme.displayLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                          fontSize: 64.0,
+                        ),
+                      ).value,
+                    ),
+                    // Animated "Samuel Leong" with color animation
+                    AnimatedBuilder(
+                      animation: _colorAnimation,
+                      builder: (context, child) {
+                        return ShaderMask(
+                          shaderCallback: (bounds) {
+                            final progress = _colorAnimation.value;
 
-                        // Create smooth color transitions between theme colors
-                        final color1 = Color.lerp(
-                          colorScheme.primary,
-                          colorScheme.secondary,
-                          progress,
-                        )!;
-                        final color2 = Color.lerp(
-                          colorScheme.secondary,
-                          colorScheme.tertiary,
-                          progress,
-                        )!;
-                        final color3 = Color.lerp(
-                          colorScheme.tertiary,
-                          colorScheme.primary,
-                          progress,
-                        )!;
+                            // Create smooth color transitions between theme colors
+                            final color1 = Color.lerp(
+                              colorScheme.primary,
+                              colorScheme.secondary,
+                              progress,
+                            )!;
+                            final color2 = Color.lerp(
+                              colorScheme.secondary,
+                              colorScheme.tertiary,
+                              progress,
+                            )!;
+                            final color3 = Color.lerp(
+                              colorScheme.tertiary,
+                              colorScheme.primary,
+                              progress,
+                            )!;
 
-                        return LinearGradient(
-                          colors: [color1, color2, color3],
-                        ).createShader(bounds);
-                      },
-                      child: Text(
-                        'Hi, I\'m Samuel Leong',
-                        style: ResponsiveValue(
-                          context,
-                          conditionalValues: [
-                            Condition.smallerThan(
-                              name: TABLET,
-                              value: textTheme.displaySmall?.copyWith(
+                            return LinearGradient(
+                              colors: [color1, color2, color3],
+                            ).createShader(bounds);
+                          },
+                          child: Text(
+                            'Samuel Leong',
+                            style: ResponsiveValue(
+                              context,
+                              conditionalValues: [
+                                Condition.smallerThan(
+                                  name: TABLET,
+                                  value: textTheme.displaySmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 48.0,
+                                  ),
+                                ),
+                              ],
+                              defaultValue: textTheme.displayLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                fontSize: 48.0,
+                                fontSize: 64.0,
                               ),
-                            ),
-                          ],
-                          defaultValue: textTheme.displayLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 64.0,
+                            ).value,
                           ),
-                        ).value,
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ],
                 ),
 
                 const SizedBox(height: 8),
@@ -230,18 +256,16 @@ class _HeroSectionState extends State<HeroSection>
                             conditionalValues: [
                               Condition.smallerThan(
                                 name: TABLET,
-                                value: textTheme.headlineLarge?.copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  color: colorScheme.primary,
-                                  fontFamily: 'monospace',
+                                value: GoogleFonts.sourceCodePro(
+                                  fontWeight: FontWeight.w400,
+                                  color: colorScheme.onSurface,
                                   fontSize: 36.0,
                                 ),
                               ),
                             ],
-                            defaultValue: textTheme.displaySmall?.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: colorScheme.primary,
-                              fontFamily: 'monospace',
+                            defaultValue: GoogleFonts.sourceCodePro(
+                              fontWeight: FontWeight.w400,
+                              color: colorScheme.onSurface,
                               fontSize: 42.0,
                             ),
                           ).value,
@@ -261,19 +285,16 @@ class _HeroSectionState extends State<HeroSection>
                                   conditionalValues: [
                                     Condition.smallerThan(
                                       name: TABLET,
-                                      value: textTheme.headlineLarge?.copyWith(
-                                        color: colorScheme.primary,
-                                        fontFamily: 'monospace',
+                                      value: GoogleFonts.sourceCodePro(
+                                        color: colorScheme.onSurface,
                                         fontSize: 36.0,
                                       ),
                                     ),
                                   ],
-                                  defaultValue: textTheme.displaySmall
-                                      ?.copyWith(
-                                        color: colorScheme.primary,
-                                        fontFamily: 'monospace',
-                                        fontSize: 52.0,
-                                      ),
+                                  defaultValue: GoogleFonts.sourceCodePro(
+                                    color: colorScheme.onSurface,
+                                    fontSize: 52.0,
+                                  ),
                                 ).value,
                               ),
                             );
@@ -301,33 +322,42 @@ class _HeroSectionState extends State<HeroSection>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'if (passion === "coding") {',
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withValues(alpha: 0.85),
-                          fontFamily: 'monospace',
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: Text(
-                          'return "Building beautiful, performant applications";',
-                          style: textTheme.bodyLarge?.copyWith(
-                            color: colorScheme.onSurface,
-                            fontFamily: 'monospace',
-                            fontWeight: FontWeight.w500,
+                      // Code block - seamless with background
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'if (passion === "coding") {',
+                            style: GoogleFonts.sourceCodePro(
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.85,
+                              ),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Text(
-                        '}',
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface.withValues(alpha: 0.85),
-                          fontFamily: 'monospace',
-                        ),
-                        textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text(
+                              'return "Building beautiful, performant applications";',
+                              style: GoogleFonts.sourceCodePro(
+                                color: colorScheme.onSurface,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '}',
+                            style: GoogleFonts.sourceCodePro(
+                              color: colorScheme.onSurface.withValues(
+                                alpha: 0.85,
+                              ),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 20),
                       _buildSkillBubbles(context, colorScheme),
@@ -376,7 +406,7 @@ class _HeroSectionState extends State<HeroSection>
                             Icon(Icons.code, size: 20),
                             SizedBox(width: 10),
                             Text(
-                              'GitHub.explore()',
+                              ' View GitHub',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

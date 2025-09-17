@@ -13,25 +13,70 @@ class ProjectsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Icon(Icons.work, color: colorScheme.primary, size: 28),
-            const SizedBox(width: 12),
-            ShaderMask(
-              shaderCallback: (bounds) => LinearGradient(
-                colors: [colorScheme.tertiary, colorScheme.primary],
-              ).createShader(bounds),
-              child: Text(
-                'Projects',
-                style: textTheme.headlineMedium?.copyWith(
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                colorScheme.tertiary.withValues(alpha: 0.05),
+                colorScheme.primary.withValues(alpha: 0.05),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: colorScheme.tertiary.withValues(alpha: 0.1),
+              width: 1,
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.tertiary.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(Icons.work, color: colorScheme.tertiary, size: 28),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: [
+                          colorScheme.tertiary,
+                          colorScheme.primary,
+                          colorScheme.secondary,
+                        ],
+                      ).createShader(bounds),
+                      child: Text(
+                        'Projects',
+                        style: textTheme.headlineMedium?.copyWith(
+                          fontFamily: 'monospace',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                '// Showcase of applications that solve real-world problems',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurface.withValues(alpha: 0.85),
+                  fontStyle: FontStyle.italic,
                   fontFamily: 'monospace',
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32.0,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(height: 24),
         _buildProjectsGrid(context),

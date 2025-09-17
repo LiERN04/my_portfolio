@@ -104,43 +104,73 @@ class _AboutSectionState extends State<AboutSection>
           opacity: _headerAnimation,
           child: SlideTransition(
             position: _slideAnimation,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.person_search,
-                      color: colorScheme.primary,
-                      size: 28,
-                    ),
-                    const SizedBox(width: 12),
-                    ShaderMask(
-                      shaderCallback: (bounds) => LinearGradient(
-                        colors: [colorScheme.primary, colorScheme.secondary],
-                      ).createShader(bounds),
-                      child: Text(
-                        'About Me',
-                        style: textTheme.headlineMedium?.copyWith(
-                          fontFamily: 'monospace',
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32.0,
-                        ),
-                      ),
-                    ),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    colorScheme.primary.withValues(alpha: 0.05),
+                    colorScheme.secondary.withValues(alpha: 0.05),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  '// Discover my journey through code',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurface.withValues(alpha: 0.85),
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'monospace',
-                  ),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  width: 1,
                 ),
-              ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: colorScheme.primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.person_search,
+                          color: colorScheme.primary,
+                          size: 28,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: ShaderMask(
+                          shaderCallback: (bounds) => LinearGradient(
+                            colors: [
+                              colorScheme.primary,
+                              colorScheme.secondary,
+                            ],
+                          ).createShader(bounds),
+                          child: Text(
+                            'About Me',
+                            style: textTheme.headlineMedium?.copyWith(
+                              fontFamily: 'monospace',
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 32.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    '// Passionate developer crafting innovative digital experiences',
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.85),
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'monospace',
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

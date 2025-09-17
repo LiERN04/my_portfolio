@@ -98,7 +98,7 @@ class _SkillsSectionState extends State<SkillsSection>
                           ),
                           child: Icon(
                             Icons.code,
-                            color: colorScheme.primary,
+                            color: colorScheme.secondary,
                             size: 28,
                           ),
                         ),

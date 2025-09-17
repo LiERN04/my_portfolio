@@ -330,7 +330,7 @@ class _HeroSectionState extends State<HeroSection>
                             'if (passion === "coding") {',
                             style: GoogleFonts.sourceCodePro(
                               color: colorScheme.onSurface.withValues(
-                                alpha: 0.85,
+                                alpha: 0.6,
                               ),
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
@@ -341,7 +341,9 @@ class _HeroSectionState extends State<HeroSection>
                             child: Text(
                               'return "Building beautiful, performant applications";',
                               style: GoogleFonts.sourceCodePro(
-                                color: colorScheme.onSurface,
+                                color: colorScheme.onSurface.withValues(
+                                  alpha: 0.6,
+                                ),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -351,7 +353,7 @@ class _HeroSectionState extends State<HeroSection>
                             '}',
                             style: GoogleFonts.sourceCodePro(
                               color: colorScheme.onSurface.withValues(
-                                alpha: 0.85,
+                                alpha: 0.6,
                               ),
                               fontSize: 16,
                               fontWeight: FontWeight.w400,

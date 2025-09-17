@@ -14,10 +14,12 @@ class _HeroSectionState extends State<HeroSection>
   late AnimationController _fadeController;
   late AnimationController _slideController;
   late AnimationController _typewriterController;
+  late AnimationController _colorController;
 
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _typewriterAnimation;
+  late Animation<double> _colorAnimation;
 
   final List<String> _techTitles = [
     'FullStack Developer',
@@ -60,6 +62,11 @@ class _HeroSectionState extends State<HeroSection>
       vsync: this,
     );
 
+    _colorController = AnimationController(
+      duration: const Duration(seconds: 4), // Slow 4-second cycle
+      vsync: this,
+    );
+
     // Initialize animations
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _fadeController, curve: Curves.easeOutCubic),
@@ -72,6 +79,10 @@ class _HeroSectionState extends State<HeroSection>
 
     _typewriterAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _typewriterController, curve: Curves.easeInOut),
+    );
+
+    _colorAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _colorController, curve: Curves.easeInOut),
     );
 
     // Start animations
@@ -91,6 +102,10 @@ class _HeroSectionState extends State<HeroSection>
     _slideController.forward();
     await Future.delayed(const Duration(milliseconds: 500));
     _typewriterController.forward();
+
+    // Start the color animation loop after other animations complete
+    await Future.delayed(const Duration(milliseconds: 1000));
+    _colorController.repeat(reverse: true);
   }
 
   void _startTitleCycling() async {
@@ -114,6 +129,7 @@ class _HeroSectionState extends State<HeroSection>
     _fadeController.dispose();
     _slideController.dispose();
     _typewriterController.dispose();
+    _colorController.dispose();
     super.dispose();
   }
 
@@ -134,37 +150,59 @@ class _HeroSectionState extends State<HeroSection>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Main name with gradient effect
-                ShaderMask(
-                  shaderCallback: (bounds) => LinearGradient(
-                    colors: [
-                      colorScheme.primary,
-                      colorScheme.secondary,
-                      colorScheme.tertiary,
-                    ],
-                  ).createShader(bounds),
-                  child: Text(
-                    'Hi, I\'m Samuel Leong',
-                    style: ResponsiveValue(
-                      context,
-                      conditionalValues: [
-                        Condition.smallerThan(
-                          name: TABLET,
-                          value: textTheme.displaySmall?.copyWith(
+                // Main name with animated gradient effect
+                AnimatedBuilder(
+                  animation: _colorAnimation,
+                  builder: (context, child) {
+                    return ShaderMask(
+                      shaderCallback: (bounds) {
+                        final progress = _colorAnimation.value;
+
+                        // Create smooth color transitions between theme colors
+                        final color1 = Color.lerp(
+                          colorScheme.primary,
+                          colorScheme.secondary,
+                          progress,
+                        )!;
+                        final color2 = Color.lerp(
+                          colorScheme.secondary,
+                          colorScheme.tertiary,
+                          progress,
+                        )!;
+                        final color3 = Color.lerp(
+                          colorScheme.tertiary,
+                          colorScheme.primary,
+                          progress,
+                        )!;
+
+                        return LinearGradient(
+                          colors: [color1, color2, color3],
+                        ).createShader(bounds);
+                      },
+                      child: Text(
+                        'Hi, I\'m Samuel Leong',
+                        style: ResponsiveValue(
+                          context,
+                          conditionalValues: [
+                            Condition.smallerThan(
+                              name: TABLET,
+                              value: textTheme.displaySmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 48.0,
+                              ),
+                            ),
+                          ],
+                          defaultValue: textTheme.displayLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
-                            fontSize: 48.0,
+                            fontSize: 64.0,
                           ),
-                        ),
-                      ],
-                      defaultValue: textTheme.displayLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 64.0,
+                        ).value,
+                        textAlign: TextAlign.center,
                       ),
-                    ).value,
-                    textAlign: TextAlign.center,
-                  ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 8),

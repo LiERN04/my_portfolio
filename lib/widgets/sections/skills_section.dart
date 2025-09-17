@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../../data/personal_data.dart';
 import '../../data/models/skill_model.dart';
+import '../skill_icon_widget.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});
@@ -374,15 +374,11 @@ class _HoverableSkillCardState extends State<_HoverableSkillCard> {
                         width: _isHovered ? 2 : 1,
                       ),
                     ),
-                    child: widget.skill.icon.endsWith('.svg')
-                        ? SvgPicture.asset(
-                            widget.skill.icon,
-                            colorFilter: ColorFilter.mode(
-                              colorScheme.primary,
-                              BlendMode.srcIn,
-                            ),
-                          )
-                        : Image.asset(widget.skill.icon, fit: BoxFit.contain),
+                    child: SkillIconWidget(
+                      skill: widget.skill,
+                      size: 30,
+                      color: colorScheme.primary,
+                    ),
                   ),
                   const SizedBox(height: 12),
 

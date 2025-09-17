@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:portfolio/data/models/skill_model.dart';
 import 'package:portfolio/data/models/experience_model.dart';
 import 'package:portfolio/data/models/academic_model.dart';
@@ -41,42 +42,6 @@ class PersonalData {
       ],
       companyWebsite: 'https://www.antgroup.com',
     ),
-    // ExperienceModel(
-    //   position: 'Flutter Developer',
-    //   company: 'Personal Projects',
-    //   companyLogo: 'svgs/flutter.svg',
-    //   duration: 'January 2023 - Present',
-    //   location: 'Remote',
-    //   employmentType: 'Freelance',
-    //   description:
-    //       'Developed multiple cross-platform mobile applications using Flutter, '
-    //       'focusing on beautiful UI/UX design and performant solutions.',
-    //   keyResponsibilities: [
-    //     'Mobile App Development - Created responsive cross-platform applications',
-    //     'UI/UX Design - Implemented modern and intuitive user interfaces',
-    //     'State Management - Utilized various state management solutions (Riverpod, Bloc)',
-    //     'Firebase Integration - Implemented authentication, storage, and real-time features',
-    //     'Performance Optimization - Ensured smooth animations and fast load times',
-    //     'Code Quality - Maintained clean, documented, and testable code',
-    //   ],
-    //   achievements: [
-    //     'Built 3+ production-ready mobile applications',
-    //     'Achieved 4.5+ star ratings on app stores',
-    //     'Implemented complex animations and custom widgets',
-    //     'Successfully integrated multiple third-party services',
-    //   ],
-    //   technologiesUsed: [
-    //     'Flutter',
-    //     'Dart',
-    //     'Firebase',
-    //     'Riverpod',
-    //     'Bloc',
-    //     'HTTP',
-    //     'SQLite',
-    //     'Git',
-    //   ],
-    //   companyWebsite: null,
-    // ),
   ];
 
   static const List<AcademicModel> academics = [
@@ -97,40 +62,48 @@ class PersonalData {
   ];
 
   static const List<SkillModel> skills = [
-    SkillModel(
-      icon: 'svgs/flutter.svg',
-      name: 'Mobile Development',
-      description:
-          'Mobile app development utilizing practices such as MVVM, state management, app lifecycle mangement and navigaton',
-      proficiency: 90,
-      technologies: ['Flutter', 'Dart', 'Firebase', 'State Management'],
-      experience: '1+ years',
-    ),
-    SkillModel(
-      icon: 'svgs/dart.svg',
+    SkillModel.withImage(
+      imagePath: 'images/react.png',
       name: 'Frontend UI/UX Development',
       description:
           'Modern responsive web interfaces with great user experience',
       proficiency: 85,
-      technologies: ['React', 'Vue.js', 'TypeScript', 'CSS3', 'Figma'],
-      experience: '4+ years',
+      technologies: [
+        'ReactJS',
+        'Flutter',
+        'TypeScript',
+        'JavaScript',
+        'CSS3',
+        'TailwindCSS',
+        'Reactive UI',
+      ],
+      experience: '1+ years',
     ),
-    SkillModel(
-      icon: 'images/react.png',
+    SkillModel.withMaterialIcon(
+      iconData: Icons.mobile_friendly_rounded,
+      name: 'Mobile Development',
+      description:
+          'Mobile app development utilizing practices such as MVVM, state management, app lifecycle mangement and navigaton',
+      proficiency: 90,
+      technologies: ['Flutter', 'Dart', 'Reactive UI', 'State Management'],
+      experience: '1+ years',
+    ),
+    SkillModel.withMaterialIcon(
+      iconData: Icons.api_rounded,
       name: 'Backend API Development',
       description: 'Scalable backend services and RESTful API development',
       proficiency: 80,
-      technologies: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL'],
+      technologies: ['Flask', 'SpringBoot', 'PostgreSQL', 'API Development'],
       experience: '3+ years',
     ),
-    SkillModel(
-      icon: 'svgs/git.svg',
+    SkillModel.withMaterialIcon(
+      iconData: Icons.layers_rounded,
       name: 'FullStack Development',
       description:
           'End-to-end application development from concept to deployment',
       proficiency: 88,
-      technologies: ['Git', 'Docker', 'AWS', 'CI/CD', 'Testing'],
-      experience: '5+ years',
+      technologies: ['NodeJS', 'Flask', 'AWS', 'Supabase', 'Unit Testing'],
+      experience: '1+ years',
     ),
   ];
 }

@@ -219,13 +219,7 @@ class ProjectDetailScreen extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.code_rounded,
-                                color: colorScheme.primary,
-                                size: 18,
-                              ),
-                              const SizedBox(width: 6),
+                            children: [      
                               Text(
                                 'View on GitHub',
                                 style: textTheme.labelMedium?.copyWith(
@@ -367,51 +361,6 @@ class ProjectDetailScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Section Header with enhanced styling
-        // Container(
-        //   width: double.infinity,
-        //   padding: const EdgeInsets.all(20),
-        //   decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //       colors: [
-        //         colorScheme.primaryContainer,
-        //         colorScheme.primaryContainer.withValues(alpha: 0.5),
-        //       ],
-        //       begin: Alignment.centerLeft,
-        //       end: Alignment.centerRight,
-        //     ),
-        //     borderRadius: BorderRadius.circular(16),
-        //     border: Border.all(
-        //       color: colorScheme.primary.withValues(alpha: 0.3),
-        //       width: 2,
-        //     ),
-        //   ),
-        //   child: Row(
-        //     children: [
-        //       Container(
-        //         padding: const EdgeInsets.all(8),
-        //         decoration: BoxDecoration(
-        //           color: colorScheme.primary,
-        //           borderRadius: BorderRadius.circular(8),
-        //         ),
-        //         child: Icon(
-        //           Icons.article,
-        //           color: colorScheme.onPrimary,
-        //           size: 24,
-        //         ),
-        //       ),
-        //       const SizedBox(width: 16),
-        //       Text(
-        //         'Detailed Project Analysis',
-        //         style: textTheme.headlineSmall?.copyWith(
-        //           fontWeight: FontWeight.bold,
-        //           color: colorScheme.primary,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        // const SizedBox(height: 32),
         ...project.detailedContent!.asMap().entries.map((entry) {
           int index = entry.key;
           ProjectContent content = entry.value;

@@ -89,7 +89,7 @@ class ProjectData {
           imageUrl: 'images/flutter-banner.png',
           status: 'Completed',
           sourceUrl:
-              'https://github.com/yourusername/flutter-portfolio', // Add your actual GitHub URL
+              'https://github.com/LiERN04/my_portfolio',
           techStack: [
             'Flutter Web',
             'Dart',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:portfolio/widgets/components/mobile_nav.dart';
-import 'package:portfolio/widgets/components/side_nav.dart';
 import 'package:portfolio/widgets/components/scroll_fade_in.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:portfolio/providers/theme_provider.dart';
@@ -26,7 +25,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   String _currentSection = 'hero';
   int _aboutTabIndex = 0; // Track current About tab index
   Function(int)? _aboutTabSwitcher; // Callback to switch About tabs
-  bool _showSideNav = true; // Toggle for side navigation visibility
 
   // Global keys for each section
   final GlobalKey _aboutKey = GlobalKey();
@@ -226,34 +224,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ? MobileNavigation(onSectionTap: _scrollToSection)
           : null,
       appBar: AppBar(
-        leading: isDesktop
-            ? TweenAnimationBuilder<double>(
-                duration: const Duration(milliseconds: 600),
-                tween: Tween(begin: 0.0, end: 1.0),
-                builder: (context, value, child) {
-                  return Transform.scale(
-                    scale: value,
-                    child: IconButton(
-                      icon: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 300),
-                        child: Icon(
-                          _showSideNav ? Icons.menu_open : Icons.menu,
-                          key: ValueKey(_showSideNav),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _showSideNav = !_showSideNav;
-                        });
-                      },
-                      tooltip: _showSideNav
-                          ? 'Hide Navigation'
-                          : 'Show Navigation',
-                    ),
-                  );
-                },
-              )
-            : null,
+        automaticallyImplyLeading: false,
         title: TweenAnimationBuilder<double>(
           duration: const Duration(milliseconds: 800),
           tween: Tween(begin: 0.0, end: 1.0),
@@ -309,122 +280,93 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Stack(
         children: [
-          Row(
-            children: [
-              // Animated side navigation
-              if (isDesktop)
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  width: _showSideNav ? 250 : 0,
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 200),
-                    opacity: _showSideNav ? 1.0 : 0.0,
-                    child: _showSideNav
-                        ? SideNavigation(
-                            onSectionTap: _scrollToSection,
-                            currentSection: _currentSection,
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                ),
-
-              Expanded(
-                child: SingleChildScrollView(
-                  controller: _scrollController,
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: ResponsiveValue(
-                        context,
-                        conditionalValues: [
-                          const Condition.smallerThan(
-                            name: TABLET,
-                            value: 16.0,
-                          ),
-                        ],
-                        defaultValue: 24.0,
-                      ).value,
-                      vertical: 24,
-                    ),
-                    child: Column(
-                      children: [
-                        // Hero section with custom styling (always visible initially)
-                        _buildSectionContainer(
-                          style: SectionStyle.hero,
-                          colorScheme: colorScheme,
-                          child: const HeroSection(),
-                        ),
-
-                        _buildSectionDivider(colorScheme),
-
-                        // About section with scroll-triggered animation
-                        ScrollFadeIn(
-                          isVisible: _sectionAnimationStates['about'] ?? true,
-                          duration: const Duration(milliseconds: 1000),
-                          slideOffset: const Offset(0, 60),
-                          child: _buildSectionContainer(
-                            style: SectionStyle.normal,
-                            colorScheme: colorScheme,
-                            child: AboutSection(
-                              key: _aboutKey,
-                              initialTabIndex: _aboutTabIndex,
-                              onTabControllerReady: (switcher) {
-                                _aboutTabSwitcher = switcher;
-                              },
-                            ),
-                          ),
-                        ),
-
-                        _buildSectionDivider(colorScheme),
-
-                        // Skills section with scroll-triggered animation
-                        ScrollFadeIn(
-                          isVisible: _sectionAnimationStates['skills'] ?? false,
-                          duration: const Duration(milliseconds: 1200),
-                          slideOffset: const Offset(0, 60),
-                          child: _buildSectionContainer(
-                            style: SectionStyle.normal,
-                            colorScheme: colorScheme,
-                            child: SkillsSection(key: _skillsKey),
-                          ),
-                        ),
-
-                        _buildSectionDivider(colorScheme),
-
-                        // Projects section with scroll-triggered animation
-                        ScrollFadeIn(
-                          isVisible:
-                              _sectionAnimationStates['projects'] ?? false,
-                          duration: const Duration(milliseconds: 1400),
-                          slideOffset: const Offset(0, 60),
-                          child: _buildSectionContainer(
-                            style: SectionStyle.normal,
-                            colorScheme: colorScheme,
-                            child: ProjectsSection(key: _projectsKey),
-                          ),
-                        ),
-
-                        _buildSectionDivider(colorScheme),
-
-                        // Contact section with scroll-triggered animation
-                        ScrollFadeIn(
-                          isVisible:
-                              _sectionAnimationStates['contact'] ?? false,
-                          duration: const Duration(milliseconds: 1600),
-                          slideOffset: const Offset(0, 60),
-                          child: _buildSectionContainer(
-                            style: SectionStyle.elevated,
-                            colorScheme: colorScheme,
-                            child: GetInTouchSection(key: _contactKey),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+          SingleChildScrollView(
+            controller: _scrollController,
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: ResponsiveValue(
+                  context,
+                  conditionalValues: [
+                    const Condition.smallerThan(name: TABLET, value: 16.0),
+                  ],
+                  defaultValue: 24.0,
+                ).value,
+                vertical: 24,
               ),
-            ],
+              child: Column(
+                children: [
+                  // Hero section with custom styling (always visible initially)
+                  _buildSectionContainer(
+                    style: SectionStyle.hero,
+                    colorScheme: colorScheme,
+                    child: const HeroSection(),
+                  ),
+
+                  _buildSectionDivider(colorScheme),
+
+                  // About section with scroll-triggered animation
+                  ScrollFadeIn(
+                    isVisible: _sectionAnimationStates['about'] ?? true,
+                    duration: const Duration(milliseconds: 1000),
+                    slideOffset: const Offset(0, 60),
+                    child: _buildSectionContainer(
+                      style: SectionStyle.normal,
+                      colorScheme: colorScheme,
+                      child: AboutSection(
+                        key: _aboutKey,
+                        initialTabIndex: _aboutTabIndex,
+                        onTabControllerReady: (switcher) {
+                          _aboutTabSwitcher = switcher;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  _buildSectionDivider(colorScheme),
+
+                  // Skills section with scroll-triggered animation
+                  ScrollFadeIn(
+                    isVisible: _sectionAnimationStates['skills'] ?? false,
+                    duration: const Duration(milliseconds: 1200),
+                    slideOffset: const Offset(0, 60),
+                    child: _buildSectionContainer(
+                      style: SectionStyle.normal,
+                      colorScheme: colorScheme,
+                      child: SkillsSection(key: _skillsKey),
+                    ),
+                  ),
+
+                  _buildSectionDivider(colorScheme),
+
+                  // Projects section with scroll-triggered animation
+                  ScrollFadeIn(
+                    isVisible: _sectionAnimationStates['projects'] ?? false,
+                    duration: const Duration(milliseconds: 1400),
+                    slideOffset: const Offset(0, 60),
+                    child: _buildSectionContainer(
+                      style: SectionStyle.normal,
+                      colorScheme: colorScheme,
+                      child: ProjectsSection(key: _projectsKey),
+                    ),
+                  ),
+
+                  _buildSectionDivider(colorScheme),
+
+                  // Contact section with scroll-triggered animation
+                  ScrollFadeIn(
+                    isVisible: _sectionAnimationStates['contact'] ?? false,
+                    duration: const Duration(milliseconds: 1600),
+                    slideOffset: const Offset(0, 60),
+                    child: _buildSectionContainer(
+                      style: SectionStyle.elevated,
+                      colorScheme: colorScheme,
+                      child: GetInTouchSection(key: _contactKey),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
 
           // Floating scroll progress indicator
@@ -820,14 +762,12 @@ class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
                   right: 12, // Position just to the left of the bar
                   child: TweenAnimationBuilder<double>(
                     duration: const Duration(milliseconds: 600),
-                    curve: _isHovered
-                        ? Curves.easeOutCubic
-                        : Curves.easeInCubic,
+                    curve: Curves.easeOutCubic,
                     tween: Tween(begin: 0.0, end: _isHovered ? 1.0 : 0.0),
                     builder: (context, value, child) {
                       return AnimatedOpacity(
                         opacity: value,
-                        duration: const Duration(milliseconds: 300),
+                        duration: const Duration(milliseconds: 600),
                         child: value > 0.01
                             ? Container(
                                 padding: const EdgeInsets.symmetric(
@@ -1021,7 +961,7 @@ class _HoverableSectionState extends State<_HoverableSection>
                 color: widget.isActive
                     ? widget.colorScheme.primary
                     : widget.colorScheme.onSurface.withValues(alpha: 0.7),
-                fontSize: _isHovered ? 12 : 11,
+                fontSize: _isHovered ? 16 : 15,
                 fontWeight: widget.isActive ? FontWeight.w600 : FontWeight.w400,
               ),
               child: Text(widget.section['name']!, textAlign: TextAlign.right),

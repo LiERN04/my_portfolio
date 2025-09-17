@@ -417,16 +417,10 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
       case IconType.svg:
         return SvgPicture.asset(
           widget.skill.icon as String,
-          colorFilter: ColorFilter.mode(
-            colorScheme.primary,
-            BlendMode.srcIn,
-          ),
+          colorFilter: ColorFilter.mode(colorScheme.primary, BlendMode.srcIn),
         );
       case IconType.image:
-        return Image.asset(
-          widget.skill.icon as String,
-          fit: BoxFit.contain,
-        );
+        return Image.asset(widget.skill.icon as String, fit: BoxFit.contain);
       case IconType.materialIcon:
         return Icon(
           widget.skill.icon as IconData,

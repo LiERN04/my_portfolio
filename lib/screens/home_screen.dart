@@ -729,44 +729,254 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildScrollIndicator(ColorScheme colorScheme) {
-    return AnimatedBuilder(
-      animation: _scrollController,
-      builder: (context, child) {
-        double progress = 0.0;
-        if (_scrollController.hasClients) {
-          progress =
-              (_scrollController.offset /
-                      _scrollController.position.maxScrollExtent)
-                  .clamp(0.0, 1.0);
-        }
+    return _ScrollIndicatorWidget(
+      scrollController: _scrollController,
+      colorScheme: colorScheme,
+      currentSection: _currentSection,
+      onSectionTap: _scrollToSection,
+    );
+  }
+}
 
-        return Container(
-          width: 4,
-          height: 120,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(2),
-            color: colorScheme.outline.withValues(alpha: 0.2),
-          ),
-          child: Stack(
-            children: [
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 100),
-                top: progress * (120 - 30),
-                child: Container(
-                  width: 4,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
-                    gradient: LinearGradient(
-                      colors: [colorScheme.primary, colorScheme.secondary],
+class _ScrollIndicatorWidget extends StatefulWidget {
+  final ScrollController scrollController;
+  final ColorScheme colorScheme;
+  final String currentSection;
+  final void Function(String) onSectionTap;
+
+  const _ScrollIndicatorWidget({
+    required this.scrollController,
+    required this.colorScheme,
+    required this.currentSection,
+    required this.onSectionTap,
+  });
+
+  @override
+  State<_ScrollIndicatorWidget> createState() => _ScrollIndicatorWidgetState();
+}
+
+class _ScrollIndicatorWidgetState extends State<_ScrollIndicatorWidget>
+    with TickerProviderStateMixin {
+  bool _isHovered = false;
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+
+  final List<Map<String, String>> sections = [
+    {'id': 'hero', 'name': 'Home'},
+    {'id': 'about', 'name': 'About'},
+    {'id': 'skills', 'name': 'Skills'},
+    {'id': 'projects', 'name': 'Projects'},
+    {'id': 'contact', 'name': 'Contact'},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    _pulseAnimation = Tween<double>(begin: 0.8, end: 1.2).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+
+    _pulseController.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => _onHover(true),
+      onExit: (_) => _onHover(false),
+      child: AnimatedBuilder(
+        animation: Listenable.merge([
+          widget.scrollController,
+          _pulseController,
+        ]),
+        builder: (context, child) {
+          double progress = 0.0;
+          if (widget.scrollController.hasClients) {
+            progress =
+                (widget.scrollController.offset /
+                        widget.scrollController.position.maxScrollExtent)
+                    .clamp(0.0, 1.0);
+          }
+
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Section labels (shown on hover)
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeOutCubic,
+                  width: _isHovered ? 80 : 0,
+                  child: AnimatedOpacity(
+                    opacity: _isHovered ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 400),
+                    child: _isHovered
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: sections.map((section) {
+                              bool isActive =
+                                  section['id'] == widget.currentSection;
+                              return GestureDetector(
+                                onTap: () =>
+                                    widget.onSectionTap(section['id']!),
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 1,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isActive
+                                          ? widget.colorScheme.primary
+                                                .withValues(alpha: 0.1)
+                                          : Colors.transparent,
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: isActive
+                                          ? Border.all(
+                                              color: widget.colorScheme.primary
+                                                  .withValues(alpha: 0.3),
+                                              width: 1,
+                                            )
+                                          : null,
+                                    ),
+                                    child: Text(
+                                      section['name']!,
+                                      style: TextStyle(
+                                        color: isActive
+                                            ? widget.colorScheme.primary
+                                            : widget.colorScheme.onSurface
+                                                  .withValues(alpha: 0.7),
+                                        fontSize: 11,
+                                        fontWeight: isActive
+                                            ? FontWeight.w600
+                                            : FontWeight.w400,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                // Progress bar
+                GestureDetector(
+                  onTapDown: (details) => _handleTap(details, progress),
+                  child: Container(
+                    width: 4,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2),
+                      color: widget.colorScheme.outline.withValues(alpha: 0.2),
+                    ),
+                    child: Stack(
+                      children: [
+                        // Progress indicator
+                        AnimatedPositioned(
+                          duration: const Duration(milliseconds: 100),
+                          top: progress * (120 - 30),
+                          child: AnimatedBuilder(
+                            animation: _pulseAnimation,
+                            child: Container(
+                              width: 4,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(2),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    widget.colorScheme.primary,
+                                    widget.colorScheme.secondary,
+                                  ],
+                                ),
+                              ),
+                            ),
+                            builder: (context, child) {
+                              return Transform.scale(
+                                scale: _isHovered ? _pulseAnimation.value : 1.0,
+                                child: child,
+                              );
+                            },
+                          ),
+                        ),
+
+                        // Section markers
+                        ...sections.asMap().entries.map((entry) {
+                          int index = entry.key;
+                          String sectionId = entry.value['id']!;
+                          bool isActive = sectionId == widget.currentSection;
+                          double position =
+                              (index / (sections.length - 1)) * 120;
+
+                          return Positioned(
+                            top: position - 2,
+                            child: Container(
+                              width: isActive ? 8 : 6,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: isActive
+                                    ? widget.colorScheme.primary
+                                    : widget.colorScheme.outline.withValues(
+                                        alpha: 0.4,
+                                      ),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  void _onHover(bool isHovered) {
+    setState(() {
+      _isHovered = isHovered;
+    });
+  }
+
+  void _handleTap(TapDownDetails details, double currentProgress) {
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final localPosition = renderBox.globalToLocal(details.globalPosition);
+
+    // Calculate which section was tapped based on position
+    final barHeight = 120.0;
+    final tappedProgress = (localPosition.dy - 4) / barHeight;
+    final clampedProgress = tappedProgress.clamp(0.0, 1.0);
+
+    // Find closest section
+    int targetIndex = (clampedProgress * (sections.length - 1)).round();
+    targetIndex = targetIndex.clamp(0, sections.length - 1);
+
+    widget.onSectionTap(sections[targetIndex]['id']!);
   }
 }

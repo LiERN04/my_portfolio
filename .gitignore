@@ -1,0 +1,68 @@
+# Flutter/Dart build outputs
+build/
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Flutter/Dart specific
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+*.config.dart
+
+# Coverage
+coverage/
+lcov.info
+
+# Firebase
+**/ios/Runner/GoogleService-Info.plist
+**/android/app/google-services.json
+
+# Web
+build/web/
+
+# Windows
+build/windows/
+
+# Linux
+build/linux/
+
+# macOS
+build/macos/
+
+# iOS
+build/ios/
+**/ios/Pods/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/.symlinks/
+
+# Android
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+*.jks
+*.keystore

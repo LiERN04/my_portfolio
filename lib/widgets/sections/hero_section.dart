@@ -27,6 +27,17 @@ class _HeroSectionState extends State<HeroSection>
     'Tech Innovator',
   ];
 
+  final List<String> _skills = [
+    'Flutter',
+    'ReactJS',
+    'Dart',
+    'JavaScript',
+    'Python',
+    'Firebase',
+    'NodeJS',
+    'MongoDB',
+  ];
+
   int _currentTitleIndex = 0;
 
   @override
@@ -62,10 +73,6 @@ class _HeroSectionState extends State<HeroSection>
     _typewriterAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _typewriterController, curve: Curves.easeInOut),
     );
-
-    // _floatingAnimation = Tween<double>(begin: -10.0, end: 10.0).animate(
-    //   CurvedAnimation(parent: _floatingController, curve: Curves.easeInOut),
-    // );
 
     // Start animations
     _startAnimations();
@@ -117,7 +124,7 @@ class _HeroSectionState extends State<HeroSection>
 
     return Center(
       child: Container(
-        constraints: const BoxConstraints(maxWidth: 800),
+        constraints: const BoxConstraints(maxWidth: 1200),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
         child: FadeTransition(
           opacity: _fadeAnimation,
@@ -143,15 +150,17 @@ class _HeroSectionState extends State<HeroSection>
                       conditionalValues: [
                         Condition.smallerThan(
                           name: TABLET,
-                          value: textTheme.headlineLarge?.copyWith(
+                          value: textTheme.displaySmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
+                            fontSize: 48.0,
                           ),
                         ),
                       ],
-                      defaultValue: textTheme.displaySmall?.copyWith(
+                      defaultValue: textTheme.displayLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        fontSize: 64.0,
                       ),
                     ).value,
                     textAlign: TextAlign.center,
@@ -183,17 +192,19 @@ class _HeroSectionState extends State<HeroSection>
                             conditionalValues: [
                               Condition.smallerThan(
                                 name: TABLET,
-                                value: textTheme.headlineMedium?.copyWith(
+                                value: textTheme.headlineLarge?.copyWith(
                                   fontWeight: FontWeight.w600,
                                   color: colorScheme.primary,
                                   fontFamily: 'monospace',
+                                  fontSize: 36.0,
                                 ),
                               ),
                             ],
-                            defaultValue: textTheme.headlineLarge?.copyWith(
+                            defaultValue: textTheme.displaySmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.primary,
                               fontFamily: 'monospace',
+                              fontSize: 42.0,
                             ),
                           ).value,
                         ),
@@ -212,16 +223,18 @@ class _HeroSectionState extends State<HeroSection>
                                   conditionalValues: [
                                     Condition.smallerThan(
                                       name: TABLET,
-                                      value: textTheme.headlineMedium?.copyWith(
+                                      value: textTheme.headlineLarge?.copyWith(
                                         color: colorScheme.primary,
                                         fontFamily: 'monospace',
+                                        fontSize: 36.0,
                                       ),
                                     ),
                                   ],
-                                  defaultValue: textTheme.headlineLarge
+                                  defaultValue: textTheme.displaySmall
                                       ?.copyWith(
                                         color: colorScheme.primary,
                                         fontFamily: 'monospace',
+                                        fontSize: 52.0,
                                       ),
                                 ).value,
                               ),
@@ -245,7 +258,7 @@ class _HeroSectionState extends State<HeroSection>
                         value: double.infinity,
                       ),
                     ],
-                    defaultValue: 600.0,
+                    defaultValue: 900.0,
                   ).value,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,16 +291,8 @@ class _HeroSectionState extends State<HeroSection>
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
-                      Text(
-                        '// 3+ years crafting cross-platform magic',
-                        style: textTheme.bodyLarge?.copyWith(
-                          color: colorScheme.secondary,
-                          fontStyle: FontStyle.italic,
-                          fontFamily: 'monospace',
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
+                      const SizedBox(height: 20),
+                      _buildSkillBubbles(context, colorScheme),
                     ],
                   ),
                 ),
@@ -304,14 +309,20 @@ class _HeroSectionState extends State<HeroSection>
                       _buildAnimatedButton(
                         context: context,
                         onPressed: () => UrlLauncherService.openUrl(
-                          'mailto:jane@example.com',
+                          'mailto:likernleong8@gmail.com',
                         ),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.rocket_launch, size: 18),
-                            SizedBox(width: 8),
-                            Text('Launch Contact'),
+                            Icon(Icons.rocket_launch, size: 20),
+                            SizedBox(width: 10),
+                            Text(
+                              'Launch Contact',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ],
                         ),
                         isPrimary: true,
@@ -319,14 +330,20 @@ class _HeroSectionState extends State<HeroSection>
                       _buildAnimatedButton(
                         context: context,
                         onPressed: () => UrlLauncherService.openUrl(
-                          'https://github.com/janedoe',
+                          'https://github.com/LiERN04',
                         ),
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.code, size: 18),
-                            SizedBox(width: 8),
-                            Text('GitHub.explore()'),
+                            Icon(Icons.code, size: 20),
+                            SizedBox(width: 10),
+                            Text(
+                              'GitHub.explore()',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                           ],
                         ),
                         isPrimary: false,
@@ -348,35 +365,412 @@ class _HeroSectionState extends State<HeroSection>
     required Widget child,
     required bool isPrimary,
   }) {
-    return TweenAnimationBuilder<double>(
-      duration: const Duration(milliseconds: 200),
-      tween: Tween(begin: 1.0, end: 1.0),
-      builder: (context, scale, _) {
-        return Transform.scale(
-          scale: scale,
-          child: isPrimary
-              ? FilledButton(
-                  onPressed: onPressed,
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                  ),
-                  child: child,
-                )
-              : OutlinedButton(
-                  onPressed: onPressed,
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 12,
-                    ),
-                  ),
-                  child: child,
-                ),
+    return _AnimatedHoverButton(
+      onPressed: onPressed,
+      isPrimary: isPrimary,
+      child: child,
+    );
+  }
+
+  Widget _buildSkillBubbles(BuildContext context, ColorScheme colorScheme) {
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 12,
+      runSpacing: 12,
+      children: _skills.map((skill) {
+        return _SkillBubble(
+          skill: skill,
+          colorScheme: colorScheme,
+          animationValue: 1.0,
         );
+      }).toList(),
+    );
+  }
+}
+
+class _AnimatedHoverButton extends StatefulWidget {
+  final VoidCallback onPressed;
+  final bool isPrimary;
+  final Widget child;
+
+  const _AnimatedHoverButton({
+    required this.onPressed,
+    required this.isPrimary,
+    required this.child,
+  });
+
+  @override
+  State<_AnimatedHoverButton> createState() => _AnimatedHoverButtonState();
+}
+
+class _AnimatedHoverButtonState extends State<_AnimatedHoverButton>
+    with TickerProviderStateMixin {
+  late AnimationController _hoverController;
+  late AnimationController _pressController;
+  late AnimationController _glowController;
+
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _elevationAnimation;
+  late Animation<double> _glowAnimation;
+
+  bool _isHovered = false;
+  bool _isPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _hoverController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    _pressController = AnimationController(
+      duration: const Duration(milliseconds: 100),
+      vsync: this,
+    );
+
+    _glowController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
+      CurvedAnimation(parent: _hoverController, curve: Curves.easeOutBack),
+    );
+
+    _elevationAnimation = Tween<double>(begin: 3.0, end: 12.0).animate(
+      CurvedAnimation(parent: _hoverController, curve: Curves.easeOutCubic),
+    );
+
+    _glowAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _hoverController.dispose();
+    _pressController.dispose();
+    _glowController.dispose();
+    super.dispose();
+  }
+
+  void _onHover(bool isHovered) {
+    setState(() {
+      _isHovered = isHovered;
+    });
+
+    if (isHovered) {
+      _hoverController.forward();
+      _glowController.repeat(reverse: true);
+    } else {
+      _hoverController.reverse();
+      _glowController.stop();
+      _glowController.reset();
+    }
+  }
+
+  void _onTapDown() {
+    setState(() {
+      _isPressed = true;
+    });
+    _pressController.forward();
+  }
+
+  void _onTapUp() {
+    setState(() {
+      _isPressed = false;
+    });
+    _pressController.reverse();
+    widget.onPressed();
+  }
+
+  void _onTapCancel() {
+    setState(() {
+      _isPressed = false;
+    });
+    _pressController.reverse();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return MouseRegion(
+      onEnter: (_) => _onHover(true),
+      onExit: (_) => _onHover(false),
+      child: GestureDetector(
+        onTapDown: (_) => _onTapDown(),
+        onTapUp: (_) => _onTapUp(),
+        onTapCancel: _onTapCancel,
+        child: AnimatedBuilder(
+          animation: Listenable.merge([
+            _hoverController,
+            _pressController,
+            _glowController,
+          ]),
+          builder: (context, child) {
+            final scale = _isPressed
+                ? _scaleAnimation.value * 0.95
+                : _scaleAnimation.value;
+
+            return Transform.scale(
+              scale: scale,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    // Main shadow
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: _elevationAnimation.value * 1.5,
+                      offset: Offset(0, _elevationAnimation.value * 0.8),
+                      spreadRadius: 1,
+                    ),
+                    // Secondary shadow for depth
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: _elevationAnimation.value * 2.5,
+                      offset: Offset(0, _elevationAnimation.value * 1.2),
+                      spreadRadius: 2,
+                    ),
+                    // Glow effect when hovered
+                    if (_isHovered) ...[
+                      BoxShadow(
+                        color:
+                            (widget.isPrimary
+                                    ? colorScheme.primary
+                                    : colorScheme.secondary)
+                                .withValues(alpha: 0.4 * _glowAnimation.value),
+                        blurRadius: 25,
+                        spreadRadius: 3,
+                      ),
+                      // Inner glow
+                      BoxShadow(
+                        color:
+                            (widget.isPrimary
+                                    ? colorScheme.primary
+                                    : colorScheme.secondary)
+                                .withValues(alpha: 0.2 * _glowAnimation.value),
+                        blurRadius: 15,
+                        spreadRadius: -1,
+                      ),
+                    ],
+                  ],
+                ),
+                child: widget.isPrimary
+                    ? Container(
+                        decoration: BoxDecoration(
+                          gradient: _isHovered
+                              ? LinearGradient(
+                                  colors: [
+                                    colorScheme.primary,
+                                    colorScheme.primary.withValues(alpha: 0.8),
+                                    colorScheme.secondary.withValues(
+                                      alpha: 0.6,
+                                    ),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )
+                              : LinearGradient(
+                                  colors: [
+                                    colorScheme.primary.withValues(alpha: 0.9),
+                                    colorScheme.primary,
+                                  ],
+                                ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: FilledButton(
+                          onPressed: widget.onPressed,
+                          style: FilledButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32,
+                              vertical: 16,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 200),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: _isHovered
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                            ),
+                            child: widget.child,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          gradient: _isHovered
+                              ? LinearGradient(
+                                  colors: [
+                                    colorScheme.primary.withValues(alpha: 0.1),
+                                    colorScheme.secondary.withValues(
+                                      alpha: 0.05,
+                                    ),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                )
+                              : null,
+                          border: Border.all(
+                            color: _isHovered
+                                ? colorScheme.primary
+                                : colorScheme.outline.withValues(alpha: 0.6),
+                            width: _isHovered ? 2.5 : 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: OutlinedButton(
+                          onPressed: widget.onPressed,
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 32,
+                              vertical: 16,
+                            ),
+                            backgroundColor: Colors.transparent,
+                            side: BorderSide.none,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: AnimatedDefaultTextStyle(
+                            duration: const Duration(milliseconds: 200),
+                            style: TextStyle(
+                              color: _isHovered
+                                  ? colorScheme.primary
+                                  : colorScheme.onSurface,
+                              fontWeight: _isHovered
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                            ),
+                            child: widget.child,
+                          ),
+                        ),
+                      ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _SkillBubble extends StatefulWidget {
+  final String skill;
+  final ColorScheme colorScheme;
+  final double animationValue;
+
+  const _SkillBubble({
+    required this.skill,
+    required this.colorScheme,
+    required this.animationValue,
+  });
+
+  @override
+  State<_SkillBubble> createState() => _SkillBubbleState();
+}
+
+class _SkillBubbleState extends State<_SkillBubble>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _hoverController;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _glowAnimation;
+  bool _isHovered = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _hoverController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.15).animate(
+      CurvedAnimation(parent: _hoverController, curve: Curves.easeOutBack),
+    );
+
+    _glowAnimation = Tween<double>(
+      begin: 0.0,
+      end: 8.0,
+    ).animate(CurvedAnimation(parent: _hoverController, curve: Curves.easeOut));
+  }
+
+  @override
+  void dispose() {
+    _hoverController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => _isHovered = true);
+        _hoverController.forward();
       },
+      onExit: (_) {
+        setState(() => _isHovered = false);
+        _hoverController.reverse();
+      },
+      child: AnimatedBuilder(
+        animation: _hoverController,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: Container(
+              width: 80,
+              height: 32,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    widget.colorScheme.primary.withValues(alpha: 0.2),
+                    widget.colorScheme.secondary.withValues(alpha: 0.1),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: widget.colorScheme.primary.withValues(alpha: 0.3),
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: widget.colorScheme.primary.withValues(
+                      alpha: _isHovered ? 0.3 : 0.1,
+                    ),
+                    blurRadius: _glowAnimation.value,
+                    spreadRadius: _glowAnimation.value * 0.3,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  widget.skill,
+                  style: TextStyle(
+                    color: widget.colorScheme.primary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

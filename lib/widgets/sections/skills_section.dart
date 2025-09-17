@@ -104,12 +104,21 @@ class _SkillsSectionState extends State<SkillsSection>
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Text(
-                            'My Skills',
-                            style: textTheme.headlineSmall?.copyWith(
-                              fontFamily: 'monospace',
-                              color: colorScheme.primary,
-                              fontWeight: FontWeight.bold,
+                          child: ShaderMask(
+                            shaderCallback: (bounds) => LinearGradient(
+                              colors: [
+                                colorScheme.secondary,
+                                colorScheme.tertiary,
+                              ],
+                            ).createShader(bounds),
+                            child: Text(
+                              'My Skills',
+                              style: textTheme.headlineMedium?.copyWith(
+                                fontFamily: 'monospace',
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 32.0,
+                              ),
                             ),
                           ),
                         ),

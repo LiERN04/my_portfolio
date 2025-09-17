@@ -115,12 +115,18 @@ class _AboutSectionState extends State<AboutSection>
                       size: 28,
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      'About Me',
-                      style: textTheme.headlineSmall?.copyWith(
-                        fontFamily: 'monospace',
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
+                    ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: [colorScheme.primary, colorScheme.secondary],
+                      ).createShader(bounds),
+                      child: Text(
+                        'About Me',
+                        style: textTheme.headlineMedium?.copyWith(
+                          fontFamily: 'monospace',
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 32.0,
+                        ),
                       ),
                     ),
                   ],

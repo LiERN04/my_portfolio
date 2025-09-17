@@ -13,7 +13,34 @@ class GetInTouchSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Get in Touch', style: textTheme.headlineSmall)
+        Row(
+              children: [
+                Icon(
+                  Icons.connect_without_contact,
+                  color: colorScheme.primary,
+                  size: 28,
+                ),
+                const SizedBox(width: 12),
+                ShaderMask(
+                  shaderCallback: (bounds) => LinearGradient(
+                    colors: [
+                      colorScheme.secondary,
+                      colorScheme.primary,
+                      colorScheme.tertiary,
+                    ],
+                  ).createShader(bounds),
+                  child: Text(
+                    'Get in Touch',
+                    style: textTheme.headlineMedium?.copyWith(
+                      fontFamily: 'monospace',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32.0,
+                    ),
+                  ),
+                ),
+              ],
+            )
             .animate()
             .slideX(
               begin: -0.3,

@@ -8,11 +8,31 @@ class ProjectsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Projects', style: textTheme.headlineSmall),
+        Row(
+          children: [
+            Icon(Icons.work, color: colorScheme.primary, size: 28),
+            const SizedBox(width: 12),
+            ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: [colorScheme.tertiary, colorScheme.primary],
+              ).createShader(bounds),
+              child: Text(
+                'Projects',
+                style: textTheme.headlineMedium?.copyWith(
+                  fontFamily: 'monospace',
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32.0,
+                ),
+              ),
+            ),
+          ],
+        ),
         const SizedBox(height: 24),
         _buildProjectsGrid(context),
       ],

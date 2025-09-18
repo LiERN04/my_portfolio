@@ -108,9 +108,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           final distance = (position.dy - 150).abs();
 
           // Check if section is in view (at least 30% visible)
-          final isInView =
-              position.dy < screenHeight * 0.7 &&
-              position.dy + sectionHeight > screenHeight * 0.3;
+          // For contact section, be more lenient to ensure it triggers
+          final isInView = entry.key == 'contact'
+              ? position.dy < screenHeight * 0.9 &&
+                    position.dy + sectionHeight > 0
+              : position.dy < screenHeight * 0.7 &&
+                    position.dy + sectionHeight > screenHeight * 0.3;
 
           // Update animation state if section becomes visible
           if (isInView && !(_sectionAnimationStates[entry.key] ?? false)) {
@@ -432,21 +435,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           color: backgroundColor,
           border: Border.symmetric(
             horizontal: BorderSide(
-              color: colorScheme.outline.withValues(alpha: 0.1),
+              color: colorScheme.outline.withValues(alpha: 0.15),
               width: 1,
             ),
           ),
           boxShadow: [
             // Subtle glow effect
             BoxShadow(
-              color: colorScheme.primary.withValues(alpha: 0.1),
+              color: colorScheme.primary.withValues(alpha: 0.08),
               blurRadius: 20,
               spreadRadius: 2,
-              offset: const Offset(0, 0),
+              offset: const Offset(0, 2),
             ),
             // Additional inner glow
             BoxShadow(
-              color: colorScheme.secondary.withValues(alpha: 0.05),
+              color: colorScheme.secondary.withValues(alpha: 0.04),
               blurRadius: 40,
               spreadRadius: -5,
               offset: const Offset(0, 0),
@@ -470,26 +473,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           color: colorScheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(24),
           border: Border.all(
-            color: colorScheme.outline.withValues(alpha: 0.2),
+            color: colorScheme.outline.withValues(alpha: 0.25),
             width: 1,
           ),
           boxShadow: [
-            // Original shadow
+            // Enhanced shadow for better depth in light mode
             BoxShadow(
-              color: colorScheme.shadow.withValues(alpha: 0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: colorScheme.shadow.withValues(alpha: 0.12),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
             ),
             // Enhanced glow effect
             BoxShadow(
-              color: colorScheme.primary.withValues(alpha: 0.15),
+              color: colorScheme.primary.withValues(alpha: 0.1),
               blurRadius: 30,
               spreadRadius: 3,
               offset: const Offset(0, 0),
             ),
             // Secondary glow layer
             BoxShadow(
-              color: colorScheme.tertiary.withValues(alpha: 0.08),
+              color: colorScheme.tertiary.withValues(alpha: 0.06),
               blurRadius: 50,
               spreadRadius: -10,
               offset: const Offset(0, 2),

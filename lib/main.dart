@@ -68,12 +68,151 @@ class MyApp extends ConsumerWidget {
 }
 
 final lightTheme = ThemeData(
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.blue,
-    brightness: Brightness.light,
-  ),
+  colorScheme:
+      ColorScheme.fromSeed(
+        seedColor: Colors.blue,
+        brightness: Brightness.light,
+      ).copyWith(
+        // Enhanced light mode colors for better readability
+        surface: const Color(0xFFFAFAFA), // Softer white background
+        surfaceContainerLowest: const Color(0xFFFFFFFF), // Pure white for cards
+        surfaceContainerLow: const Color(0xFFF8F8F8), // Very light gray
+        surfaceContainer: const Color(0xFFF2F2F2), // Light gray containers
+        surfaceContainerHigh: const Color(0xFFEEEEEE), // Medium gray containers
+        surfaceContainerHighest: const Color(
+          0xFFE8E8E8,
+        ), // Darker gray containers
+        onSurface: const Color(0xFF1A1A1A), // High contrast dark text
+        onSurfaceVariant: const Color(0xFF424242), // Medium contrast text
+        outline: const Color(0xFFBDBDBD), // Light borders
+        outlineVariant: const Color(0xFFE0E0E0), // Very light borders
+        primary: const Color(0xFF1565C0), // Darker blue for better contrast
+        onPrimary: const Color(0xFFFFFFFF), // White on primary
+        primaryContainer: const Color(0xFFE3F2FD), // Light blue container
+        onPrimaryContainer: const Color(
+          0xFF0D47A1,
+        ), // Dark blue on light container
+        secondary: const Color(0xFF2E7D32), // Darker green for contrast
+        onSecondary: const Color(0xFFFFFFFF), // White on secondary
+        secondaryContainer: const Color(0xFFE8F5E8), // Light green container
+        onSecondaryContainer: const Color(
+          0xFF1B5E20,
+        ), // Dark green on light container
+        tertiary: const Color(0xFFE65100), // Orange accent with good contrast
+        onTertiary: const Color(0xFFFFFFFF), // White on tertiary
+        error: const Color(0xFFD32F2F), // Strong red for errors
+        onError: const Color(0xFFFFFFFF), // White on error
+        shadow: const Color(0x1F000000), // Subtle shadow for light mode
+      ),
   useMaterial3: true,
-  textTheme: GoogleFonts.poppinsTextTheme(),
+  textTheme: GoogleFonts.poppinsTextTheme(ThemeData.light().textTheme).copyWith(
+    // Enhanced text styles for better readability in light mode
+    displayLarge: GoogleFonts.poppins(
+      fontSize: 57,
+      fontWeight: FontWeight.w400,
+      letterSpacing: -0.25,
+      color: const Color(0xFF1A1A1A),
+      height: 1.12,
+    ),
+    displayMedium: GoogleFonts.poppins(
+      fontSize: 45,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.16,
+    ),
+    displaySmall: GoogleFonts.poppins(
+      fontSize: 36,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.22,
+    ),
+    headlineLarge: GoogleFonts.poppins(
+      fontSize: 32,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.25,
+    ),
+    headlineMedium: GoogleFonts.poppins(
+      fontSize: 28,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.29,
+    ),
+    headlineSmall: GoogleFonts.poppins(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.33,
+    ),
+    titleLarge: GoogleFonts.poppins(
+      fontSize: 22,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0,
+      color: const Color(0xFF1A1A1A),
+      height: 1.27,
+    ),
+    titleMedium: GoogleFonts.poppins(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.15,
+      color: const Color(0xFF1A1A1A),
+      height: 1.5,
+    ),
+    titleSmall: GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.1,
+      color: const Color(0xFF424242),
+      height: 1.43,
+    ),
+    bodyLarge: GoogleFonts.poppins(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.5,
+      color: const Color(0xFF1A1A1A),
+      height: 1.5,
+    ),
+    bodyMedium: GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.25,
+      color: const Color(0xFF424242),
+      height: 1.43,
+    ),
+    bodySmall: GoogleFonts.poppins(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
+      letterSpacing: 0.4,
+      color: const Color(0xFF616161),
+      height: 1.33,
+    ),
+    labelLarge: GoogleFonts.poppins(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.1,
+      color: const Color(0xFF1A1A1A),
+      height: 1.43,
+    ),
+    labelMedium: GoogleFonts.poppins(
+      fontSize: 12,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+      color: const Color(0xFF424242),
+      height: 1.33,
+    ),
+    labelSmall: GoogleFonts.poppins(
+      fontSize: 11,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+      color: const Color(0xFF616161),
+      height: 1.45,
+    ),
+  ),
 );
 
 final darkTheme = ThemeData(

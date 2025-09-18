@@ -255,17 +255,7 @@ class _AboutSectionState extends State<AboutSection>
   }
 
   Widget _buildTab(String title, IconData icon) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 18),
-          const SizedBox(width: 8),
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-        ],
-      ),
-    );
+    return _HoverableTab(title: title, icon: icon);
   }
 
   Widget _buildTabContent(Widget child) {
@@ -278,6 +268,78 @@ class _AboutSectionState extends State<AboutSection>
           child: Opacity(opacity: value, child: child),
         );
       },
+    );
+  }
+}
+
+class _HoverableTab extends StatefulWidget {
+  final String title;
+  final IconData icon;
+
+  const _HoverableTab({required this.title, required this.icon});
+
+  @override
+  State<_HoverableTab> createState() => _HoverableTabState();
+}
+
+class _HoverableTabState extends State<_HoverableTab> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeOutCubic,
+        padding: EdgeInsets.symmetric(
+          vertical: _isHovered ? 14 : 12,
+          horizontal: _isHovered ? 28 : 20,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: _isHovered
+              ? colorScheme.primary.withOpacity(0.08)
+              : Colors.transparent,
+          border: _isHovered
+              ? Border.all(
+                  color: colorScheme.primary.withOpacity(0.2),
+                  width: 1,
+                )
+              : null,
+        ),
+        child: AnimatedScale(
+          scale: _isHovered ? 1.02 : 1.0,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOutCubic,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                widget.icon,
+                size: _isHovered ? 20 : 18,
+                color: _isHovered
+                    ? colorScheme.primary
+                    : colorScheme.onSurface.withOpacity(0.7),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
+                  color: _isHovered
+                      ? colorScheme.primary
+                      : colorScheme.onSurface.withOpacity(0.8),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

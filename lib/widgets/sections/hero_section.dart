@@ -491,7 +491,7 @@ class _AnimatedHoverButtonState extends State<_AnimatedHoverButton>
     super.initState();
 
     _hoverController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 400),
       vsync: this,
     );
 

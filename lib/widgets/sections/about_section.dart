@@ -213,7 +213,7 @@ class _AboutSectionState extends State<AboutSection>
                   padding: const EdgeInsets.all(4),
                   isScrollable: ResponsiveBreakpoints.of(
                     context,
-                  ).smallerThan(TABLET),
+                  ).smallerThan(DESKTOP),
                   tabs: [
                     _buildTab('About Me', Icons.account_circle_outlined),
                     _buildTab('Experience', Icons.work_outline),
@@ -300,10 +300,15 @@ class _HoverableTabState extends State<_HoverableTab> {
                 vertical: _isHovered ? 16 : 14,
                 horizontal: _isHovered ? 18 : 16,
               )
-            : EdgeInsets.symmetric(
-                vertical: _isHovered ? 14 : 12,
-                horizontal: _isHovered ? 28 : 20,
-              ),
+            : ResponsiveBreakpoints.of(context).smallerThan(DESKTOP)
+                ? EdgeInsets.symmetric(
+                    vertical: _isHovered ? 12 : 10,
+                    horizontal: _isHovered ? 16 : 14,
+                  )
+                : EdgeInsets.symmetric(
+                    vertical: _isHovered ? 14 : 12,
+                    horizontal: _isHovered ? 28 : 20,
+                  ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: _isHovered

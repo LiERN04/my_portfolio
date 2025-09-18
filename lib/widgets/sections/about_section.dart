@@ -295,10 +295,15 @@ class _HoverableTabState extends State<_HoverableTab> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOutCubic,
-        padding: EdgeInsets.symmetric(
-          vertical: _isHovered ? 14 : 12,
-          horizontal: _isHovered ? 28 : 20,
-        ),
+        padding: ResponsiveBreakpoints.of(context).smallerThan(TABLET)
+            ? EdgeInsets.symmetric(
+                vertical: _isHovered ? 16 : 14,
+                horizontal: _isHovered ? 18 : 16,
+              )
+            : EdgeInsets.symmetric(
+                vertical: _isHovered ? 14 : 12,
+                horizontal: _isHovered ? 28 : 20,
+              ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: _isHovered
@@ -315,29 +320,39 @@ class _HoverableTabState extends State<_HoverableTab> {
           scale: _isHovered ? 1.02 : 1.0,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                widget.icon,
-                size: _isHovered ? 20 : 18,
-                color: _isHovered
-                    ? colorScheme.primary
-                    : colorScheme.onSurface.withOpacity(0.7),
-              ),
-              const SizedBox(width: 8),
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
+          child: ResponsiveBreakpoints.of(context).smallerThan(TABLET)
+              ? Icon(
+                  widget.icon,
+                  size: _isHovered ? 22 : 20,
                   color: _isHovered
                       ? colorScheme.primary
-                      : colorScheme.onSurface.withOpacity(0.8),
+                      : colorScheme.onSurface.withOpacity(0.7),
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      widget.icon,
+                      size: _isHovered ? 20 : 18,
+                      color: _isHovered
+                          ? colorScheme.primary
+                          : colorScheme.onSurface.withOpacity(0.7),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontWeight: _isHovered
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                        color: _isHovered
+                            ? colorScheme.primary
+                            : colorScheme.onSurface.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );

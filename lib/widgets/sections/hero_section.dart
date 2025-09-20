@@ -327,7 +327,7 @@ class _HeroSectionState extends State<HeroSection>
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'if (passion === "coding") {',
+                            'if (isHired === True) {',
                             style: GoogleFonts.sourceCodePro(
                               color: colorScheme.onSurface.withValues(
                                 alpha: 0.6,

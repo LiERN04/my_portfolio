@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../data/models/skill_model.dart';
+import 'clickable_description_text.dart';
 
 class FlippableSkillCard extends StatefulWidget {
   final SkillModel skill;
@@ -216,9 +217,9 @@ class _FlippableSkillCardState extends State<FlippableSkillCard>
           const SizedBox(height: 12),
 
           // Description
-          Text(
-            widget.skill.description,
-            style: TextStyle(
+          ClickableDescriptionText(
+            description: widget.skill.description,
+            textStyle: TextStyle(
               fontSize: 12,
               color: colorScheme.onSurface.withValues(alpha: 0.8),
               height: 1.3,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../data/models/skill_model.dart';
+import '../widgets/components/clickable_description_text.dart';
 
 class SkillDetailScreen extends StatefulWidget {
   final SkillModel skill;
@@ -85,7 +86,13 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () => context.pop(),
+                        onPressed: () {
+                          if (context.canPop()) {
+                            context.pop();
+                          } else {
+                            context.go('/');
+                          }
+                        },
                         icon: Icon(
                           Icons.arrow_back_ios,
                           color: colorScheme.onSurface,
@@ -267,9 +274,9 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
             ],
           ),
           const SizedBox(height: 16),
-          Text(
-            widget.skill.description,
-            style: textTheme.bodyLarge?.copyWith(
+          ClickableDescriptionText(
+            description: widget.skill.description,
+            textStyle: textTheme.bodyLarge?.copyWith(
               color: colorScheme.onSurface,
               height: 1.6,
             ),
@@ -435,7 +442,13 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
       children: [
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () => context.pop(),
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/');
+              }
+            },
             icon: const Icon(Icons.arrow_back),
             label: const Text('Back to Skills'),
             style: ElevatedButton.styleFrom(

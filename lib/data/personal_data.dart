@@ -83,9 +83,20 @@ class PersonalData {
       iconData: Icons.mobile_friendly_rounded,
       name: 'Mobile Development',
       description:
-          'Mobile app development utilizing practices such as MVVM, state management, app lifecycle mangement and navigaton',
+          'Mobile app development utilizing practices such as MVVM, state management, '
+          'app lifecycle management and navigation in a FullStack architecture. '
+          'This involves data storing and manipulation, data retrieving and API endpoint development. '
+          'I have experience developing functional mobile applications as an individual assessment (NutriCoach) '
+          'in the Mobile Application course provided by Monash University, '
+          'which achieved a High Distinction in the overall unit grade.',
       proficiency: 90,
-      technologies: ['Flutter', 'Dart', 'Reactive UI', 'State Management'],
+      technologies: [
+        'Flutter',
+        'Dart',
+        'Jetpack Compse',
+        'Reactive UI',
+        'State Management',
+      ],
       experience: '1+ years',
     ),
     SkillModel.withMaterialIcon(

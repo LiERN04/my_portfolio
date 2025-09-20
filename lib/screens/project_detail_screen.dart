@@ -63,7 +63,13 @@ class ProjectDetailScreen extends StatelessWidget {
       backgroundColor: colorScheme.surface,
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
-        onPressed: () => context.pop(),
+        onPressed: () {
+          if (context.canPop()) {
+            context.pop();
+          } else {
+            context.go('/');
+          }
+        },
       ),
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(
@@ -219,7 +225,7 @@ class ProjectDetailScreen extends StatelessWidget {
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: [      
+                            children: [
                               Text(
                                 'View on GitHub',
                                 style: textTheme.labelMedium?.copyWith(

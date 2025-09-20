@@ -301,14 +301,14 @@ class _HoverableTabState extends State<_HoverableTab> {
                 horizontal: _isHovered ? 18 : 16,
               )
             : ResponsiveBreakpoints.of(context).smallerThan(DESKTOP)
-                ? EdgeInsets.symmetric(
-                    vertical: _isHovered ? 12 : 10,
-                    horizontal: _isHovered ? 16 : 14,
-                  )
-                : EdgeInsets.symmetric(
-                    vertical: _isHovered ? 14 : 12,
-                    horizontal: _isHovered ? 28 : 20,
-                  ),
+            ? EdgeInsets.symmetric(
+                vertical: _isHovered ? 12 : 10,
+                horizontal: _isHovered ? 16 : 14,
+              )
+            : EdgeInsets.symmetric(
+                vertical: _isHovered ? 14 : 12,
+                horizontal: _isHovered ? 28 : 20,
+              ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: _isHovered

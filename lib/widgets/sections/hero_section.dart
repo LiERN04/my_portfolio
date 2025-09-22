@@ -140,7 +140,19 @@ class _HeroSectionState extends State<HeroSection>
     return Center(
       child: Container(
         constraints: const BoxConstraints(maxWidth: 1200),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+        padding: ResponsiveValue(
+          context,
+          conditionalValues: [
+            const Condition.smallerThan(
+              name: TABLET,
+              value: EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+            ),
+          ],
+          defaultValue: const EdgeInsets.symmetric(
+            horizontal: 24,
+            vertical: 40,
+          ),
+        ).value,
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: SlideTransition(
@@ -149,91 +161,128 @@ class _HeroSectionState extends State<HeroSection>
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Main name with mixed static and animated text
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Static "Hi, I'm" - theme aware
-                    Text(
-                      'Hi, I\'m ',
-                      style: ResponsiveValue(
-                        context,
-                        conditionalValues: [
-                          Condition.smallerThan(
-                            name: TABLET,
-                            value: textTheme.displaySmall?.copyWith(
+                // Main name with mixed static and animated text - use Wrap for mobile
+                ResponsiveValue(
+                  context,
+                  conditionalValues: [
+                    Condition.smallerThan(
+                      name: TABLET,
+                      value: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // On mobile, stack vertically to prevent overflow
+                          Text(
+                            'Hi, I\'m',
+                            textAlign: TextAlign.center,
+                            style: textTheme.displaySmall?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: colorScheme.onSurface,
-                              fontSize: 48.0,
+                              fontSize: 32.0, // Smaller for mobile
                             ),
                           ),
+                          AnimatedBuilder(
+                            animation: _colorAnimation,
+                            builder: (context, child) {
+                              return ShaderMask(
+                                shaderCallback: (bounds) {
+                                  final progress = _colorAnimation.value;
+
+                                  // Create smooth color transitions between theme colors
+                                  final color1 = Color.lerp(
+                                    colorScheme.primary,
+                                    colorScheme.secondary,
+                                    progress,
+                                  )!;
+                                  final color2 = Color.lerp(
+                                    colorScheme.secondary,
+                                    colorScheme.tertiary,
+                                    progress,
+                                  )!;
+                                  final color3 = Color.lerp(
+                                    colorScheme.tertiary,
+                                    colorScheme.primary,
+                                    progress,
+                                  )!;
+
+                                  return LinearGradient(
+                                    colors: [color1, color2, color3],
+                                  ).createShader(bounds);
+                                },
+                                child: Text(
+                                  'Samuel Leong',
+                                  textAlign: TextAlign.center,
+                                  style: textTheme.displaySmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 34.0, // Smaller for mobile
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ],
-                        defaultValue: textTheme.displayLarge?.copyWith(
+                      ),
+                    ),
+                  ],
+                  defaultValue: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Static "Hi, I'm" - theme aware
+                      Text(
+                        'Hi, I\'m ',
+                        style: textTheme.displayLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: colorScheme.onSurface,
                           fontSize: 64.0,
                         ),
-                      ).value,
-                    ),
-                    // Animated "Samuel Leong" with color animation
-                    AnimatedBuilder(
-                      animation: _colorAnimation,
-                      builder: (context, child) {
-                        return ShaderMask(
-                          shaderCallback: (bounds) {
-                            final progress = _colorAnimation.value;
+                      ),
+                      // Animated "Samuel Leong" with color animation
+                      AnimatedBuilder(
+                        animation: _colorAnimation,
+                        builder: (context, child) {
+                          return ShaderMask(
+                            shaderCallback: (bounds) {
+                              final progress = _colorAnimation.value;
 
-                            // Create smooth color transitions between theme colors
-                            final color1 = Color.lerp(
-                              colorScheme.primary,
-                              colorScheme.secondary,
-                              progress,
-                            )!;
-                            final color2 = Color.lerp(
-                              colorScheme.secondary,
-                              colorScheme.tertiary,
-                              progress,
-                            )!;
-                            final color3 = Color.lerp(
-                              colorScheme.tertiary,
-                              colorScheme.primary,
-                              progress,
-                            )!;
+                              // Create smooth color transitions between theme colors
+                              final color1 = Color.lerp(
+                                colorScheme.primary,
+                                colorScheme.secondary,
+                                progress,
+                              )!;
+                              final color2 = Color.lerp(
+                                colorScheme.secondary,
+                                colorScheme.tertiary,
+                                progress,
+                              )!;
+                              final color3 = Color.lerp(
+                                colorScheme.tertiary,
+                                colorScheme.primary,
+                                progress,
+                              )!;
 
-                            return LinearGradient(
-                              colors: [color1, color2, color3],
-                            ).createShader(bounds);
-                          },
-                          child: Text(
-                            'Samuel Leong',
-                            style: ResponsiveValue(
-                              context,
-                              conditionalValues: [
-                                Condition.smallerThan(
-                                  name: TABLET,
-                                  value: textTheme.displaySmall?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontSize: 48.0,
-                                  ),
-                                ),
-                              ],
-                              defaultValue: textTheme.displayLarge?.copyWith(
+                              return LinearGradient(
+                                colors: [color1, color2, color3],
+                              ).createShader(bounds);
+                            },
+                            child: Text(
+                              'Samuel Leong',
+                              style: textTheme.displayLarge?.copyWith(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                                 fontSize: 64.0,
                               ),
-                            ).value,
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ).value,
 
                 const SizedBox(height: 8),
 
-                // Animated typewriter title
+                // Animated typewriter title - wrap in Flexible to prevent overflow
                 AnimatedBuilder(
                   animation: _typewriterAnimation,
                   builder: (context, child) {
@@ -246,61 +295,83 @@ class _HeroSectionState extends State<HeroSection>
                       visibleLength,
                     );
 
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '> $visibleText',
-                          style: ResponsiveValue(
-                            context,
-                            conditionalValues: [
-                              Condition.smallerThan(
-                                name: TABLET,
-                                value: GoogleFonts.sourceCodePro(
+                    return Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              '> $visibleText',
+                              textAlign: TextAlign.center,
+                              style: ResponsiveValue(
+                                context,
+                                conditionalValues: [
+                                  Condition.smallerThan(
+                                    name: TABLET,
+                                    value: GoogleFonts.sourceCodePro(
+                                      fontWeight: FontWeight.w400,
+                                      color: colorScheme.onSurface,
+                                      fontSize: 20.0, // Much smaller for mobile
+                                    ),
+                                  ),
+                                  Condition.smallerThan(
+                                    name: DESKTOP,
+                                    value: GoogleFonts.sourceCodePro(
+                                      fontWeight: FontWeight.w400,
+                                      color: colorScheme.onSurface,
+                                      fontSize: 28.0, // Medium for tablet
+                                    ),
+                                  ),
+                                ],
+                                defaultValue: GoogleFonts.sourceCodePro(
                                   fontWeight: FontWeight.w400,
                                   color: colorScheme.onSurface,
-                                  fontSize: 36.0,
+                                  fontSize: 42.0,
                                 ),
-                              ),
-                            ],
-                            defaultValue: GoogleFonts.sourceCodePro(
-                              fontWeight: FontWeight.w400,
-                              color: colorScheme.onSurface,
-                              fontSize: 42.0,
+                              ).value,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ).value,
-                        ),
-                        // Blinking cursor
-                        TweenAnimationBuilder<double>(
-                          duration: const Duration(milliseconds: 500),
-                          tween: Tween(begin: 0.0, end: 1.0),
-                          builder: (context, value, child) {
-                            return AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: (value * 2) % 2 > 1 ? 0.0 : 1.0,
-                              child: Text(
-                                '|',
-                                style: ResponsiveValue(
-                                  context,
-                                  conditionalValues: [
-                                    Condition.smallerThan(
-                                      name: TABLET,
-                                      value: GoogleFonts.sourceCodePro(
-                                        color: colorScheme.onSurface,
-                                        fontSize: 36.0,
+                          ),
+                          // Blinking cursor
+                          TweenAnimationBuilder<double>(
+                            duration: const Duration(milliseconds: 500),
+                            tween: Tween(begin: 0.0, end: 1.0),
+                            builder: (context, value, child) {
+                              return AnimatedOpacity(
+                                duration: const Duration(milliseconds: 500),
+                                opacity: (value * 2) % 2 > 1 ? 0.0 : 1.0,
+                                child: Text(
+                                  '|',
+                                  style: ResponsiveValue(
+                                    context,
+                                    conditionalValues: [
+                                      Condition.smallerThan(
+                                        name: TABLET,
+                                        value: GoogleFonts.sourceCodePro(
+                                          color: colorScheme.onSurface,
+                                          fontSize: 20.0, // Match text size
+                                        ),
                                       ),
+                                      Condition.smallerThan(
+                                        name: DESKTOP,
+                                        value: GoogleFonts.sourceCodePro(
+                                          color: colorScheme.onSurface,
+                                          fontSize: 28.0,
+                                        ),
+                                      ),
+                                    ],
+                                    defaultValue: GoogleFonts.sourceCodePro(
+                                      color: colorScheme.onSurface,
+                                      fontSize: 52.0,
                                     ),
-                                  ],
-                                  defaultValue: GoogleFonts.sourceCodePro(
-                                    color: colorScheme.onSurface,
-                                    fontSize: 52.0,
-                                  ),
-                                ).value,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                                  ).value,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
@@ -308,7 +379,7 @@ class _HeroSectionState extends State<HeroSection>
                 const SizedBox(height: 24),
 
                 // Tech-savvy description with code snippets
-                SizedBox(
+                Container(
                   width: ResponsiveValue(
                     context,
                     conditionalValues: [
@@ -319,6 +390,16 @@ class _HeroSectionState extends State<HeroSection>
                     ],
                     defaultValue: 900.0,
                   ).value,
+                  padding: ResponsiveValue(
+                    context,
+                    conditionalValues: [
+                      const Condition.smallerThan(
+                        name: TABLET,
+                        value: EdgeInsets.symmetric(horizontal: 16.0),
+                      ),
+                    ],
+                    defaultValue: EdgeInsets.zero,
+                  ).value,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -328,34 +409,75 @@ class _HeroSectionState extends State<HeroSection>
                         children: [
                           Text(
                             'if (isHired === True) {',
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.sourceCodePro(
                               color: colorScheme.onSurface.withValues(
                                 alpha: 0.6,
                               ),
-                              fontSize: 16,
+                              fontSize: ResponsiveValue(
+                                context,
+                                conditionalValues: [
+                                  const Condition.smallerThan(
+                                    name: TABLET,
+                                    value: 12.0,
+                                  ),
+                                ],
+                                defaultValue: 16.0,
+                              ).value,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 20),
+                            padding: EdgeInsets.only(
+                              left: ResponsiveValue(
+                                context,
+                                conditionalValues: [
+                                  const Condition.smallerThan(
+                                    name: TABLET,
+                                    value: 8.0,
+                                  ),
+                                ],
+                                defaultValue: 20.0,
+                              ).value,
+                            ),
                             child: Text(
                               'return "Building beautiful, performant applications";',
+                              textAlign: TextAlign.center,
                               style: GoogleFonts.sourceCodePro(
                                 color: colorScheme.onSurface.withValues(
                                   alpha: 0.6,
                                 ),
-                                fontSize: 16,
+                                fontSize: ResponsiveValue(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.smallerThan(
+                                      name: TABLET,
+                                      value: 12.0,
+                                    ),
+                                  ],
+                                  defaultValue: 16.0,
+                                ).value,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                           Text(
                             '}',
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.sourceCodePro(
                               color: colorScheme.onSurface.withValues(
                                 alpha: 0.6,
                               ),
-                              fontSize: 16,
+                              fontSize: ResponsiveValue(
+                                context,
+                                conditionalValues: [
+                                  const Condition.smallerThan(
+                                    name: TABLET,
+                                    value: 12.0,
+                                  ),
+                                ],
+                                defaultValue: 16.0,
+                              ).value,
                               fontWeight: FontWeight.w400,
                             ),
                           ),

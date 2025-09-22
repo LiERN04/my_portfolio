@@ -78,6 +78,7 @@ class PersonalData {
         'Reactive UI',
       ],
       experience: '1+ years',
+      relatedProjectTitles: ['Portfolio Website', 'NutriCoach Health App'],
     ),
     SkillModel.withMaterialIcon(
       iconData: Icons.mobile_friendly_rounded,
@@ -98,6 +99,7 @@ class PersonalData {
         'State Management',
       ],
       experience: '1+ years',
+      relatedProjectTitles: ['NutriCoach Health App'],
     ),
     SkillModel.withMaterialIcon(
       iconData: Icons.api_rounded,
@@ -115,6 +117,10 @@ class PersonalData {
       proficiency: 88,
       technologies: ['NodeJS', 'Flask', 'AWS', 'Supabase', 'Unit Testing'],
       experience: '1+ years',
+      relatedProjectTitles: [
+        'Final Year Project (Customizable AI Chatbot)',
+        'Portfolio Website',
+      ],
     ),
   ];
 }

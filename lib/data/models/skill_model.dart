@@ -11,6 +11,8 @@ class SkillModel {
   final int proficiency; // 1-100
   final List<String> technologies;
   final String experience;
+  final List<String>?
+  relatedProjectTitles; // Project titles related to this skill
 
   const SkillModel({
     required this.icon,
@@ -20,6 +22,7 @@ class SkillModel {
     required this.proficiency,
     required this.technologies,
     required this.experience,
+    this.relatedProjectTitles,
   });
 
   // Helper constructors for different icon types
@@ -30,6 +33,7 @@ class SkillModel {
     required this.proficiency,
     required this.technologies,
     required this.experience,
+    this.relatedProjectTitles,
   }) : icon = imagePath,
        iconType = IconType.image;
 
@@ -40,6 +44,7 @@ class SkillModel {
     required this.proficiency,
     required this.technologies,
     required this.experience,
+    this.relatedProjectTitles,
   }) : icon = svgPath,
        iconType = IconType.svg;
 
@@ -50,6 +55,7 @@ class SkillModel {
     required this.proficiency,
     required this.technologies,
     required this.experience,
+    this.relatedProjectTitles,
   }) : icon = iconData,
        iconType = IconType.materialIcon;
 }

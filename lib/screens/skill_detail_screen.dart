@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import '../data/models/skill_model.dart';
+import '../data/project_data.dart';
 import '../widgets/components/clickable_description_text.dart';
 
 class SkillDetailScreen extends StatefulWidget {
@@ -414,7 +415,131 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
               ),
             ],
           ),
+          // Add related project cards if they exist
+          if (widget.skill.relatedProjectTitles?.isNotEmpty ?? false) ...[
+            const SizedBox(height: 20),
+            ..._buildRelatedProjectCards(colorScheme, textTheme),
+          ],
         ],
+      ),
+    );
+  }
+
+  List<Widget> _buildRelatedProjectCards(
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    final List<Widget> projectCards = [];
+
+    // Get all projects in a flat list with their indices
+    final allProjects = ProjectData.categories
+        .expand((category) => category.projects)
+        .toList();
+
+    // For each related project title, find and create a card
+    for (final projectTitle in widget.skill.relatedProjectTitles ?? []) {
+      final projectIndex = allProjects.indexWhere(
+        (project) => project.title == projectTitle,
+      );
+
+      if (projectIndex != -1) {
+        final project = allProjects[projectIndex];
+        projectCards.add(
+          _buildProjectCard(project, projectIndex, colorScheme, textTheme),
+        );
+      }
+    }
+
+    return projectCards;
+  }
+
+  Widget _buildProjectCard(
+    dynamic project,
+    int projectIndex,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    // Determine appropriate icon based on project type
+    IconData projectIcon = Icons.code;
+    if (project.title.toLowerCase().contains('mobile') ||
+        project.title.toLowerCase().contains('app')) {
+      projectIcon = Icons.phone_android;
+    } else if (project.title.toLowerCase().contains('web') ||
+        project.title.toLowerCase().contains('website')) {
+      projectIcon = Icons.web;
+    } else if (project.title.toLowerCase().contains('ai') ||
+        project.title.toLowerCase().contains('chatbot')) {
+      projectIcon = Icons.smart_toy;
+    }
+
+    return GestureDetector(
+      onTap: () {
+        context.push('/project/$projectIndex');
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              colorScheme.primaryContainer.withValues(alpha: 0.3),
+              colorScheme.secondaryContainer.withValues(alpha: 0.2),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: colorScheme.primary.withValues(alpha: 0.3),
+            width: 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(projectIcon, color: colorScheme.primary, size: 24),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Featured Project',
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.7),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    project.title,
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    project.description,
+                    style: textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurface.withValues(alpha: 0.6),
+                      fontSize: 12,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios, color: colorScheme.primary, size: 16),
+          ],
+        ),
       ),
     );
   }

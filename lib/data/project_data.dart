@@ -1,20 +1,20 @@
 import 'package:portfolio/data/models/project_model.dart';
+import 'package:portfolio/data/constants/project_titles.dart';
 
 class ProjectData {
   static const List<ProjectCategory> categories = [
     ProjectCategory(
-      title: 'Mobile Apps',
+      title: ProjectTitles.mobileAppsCategory,
       projects: [
         ProjectModel(
-          title: 'NutriCoach Health App',
+          title: ProjectTitles.nutricoachHealthApp,
           description:
               'NutriCoach is a nutrition-tracking Android application that demonstrates modern mobile development practices. The project highlights my ability to build scalable, maintainable, and user-friendly mobile apps by following clean architecture principles, ensuring robust state management, and integrating persistent storage and API communication.',
           technologies: 'Kotlin, Jetpack Compose, MVVM, Room, Retrofit',
           imageUrl: 'images/nutricoach.png',
           status: 'Completed',
           demoUrl: "https://github.com/LiERN04/nutricoach",
-          sourceUrl:
-              'https://github.com/LiERN04/nutricoach', 
+          sourceUrl: 'https://github.com/LiERN04/nutricoach',
           techStack: [
             'Kotlin',
             'Jetpack Compose',
@@ -29,25 +29,25 @@ class ProjectData {
           ],
           features: [
             ProjectFeature(
-              title: 'Intuitive UI/UX',
+              title: ProjectTitles.intuitiveUIUX,
               description:
                   'Built fully in Jetpack Compose with declarative UI design and bottom navigation',
               icon: 'palette',
             ),
             ProjectFeature(
-              title: 'MVVM Architecture',
+              title: ProjectTitles.mvvmArchitecture,
               description:
                   'Clean separation of concerns with Repository pattern and lifecycle awareness',
               icon: 'architecture',
             ),
             ProjectFeature(
-              title: 'Persistent Data',
+              title: ProjectTitles.persistentData,
               description:
                   'Session management and database persistence for seamless user experience',
               icon: 'storage',
             ),
             ProjectFeature(
-              title: 'API Integration',
+              title: ProjectTitles.apiIntegration,
               description:
                   'Retrofit integration with clean asynchronous calls and error handling',
               icon: 'api',
@@ -56,7 +56,7 @@ class ProjectData {
           detailedContent: [
             ProjectContent(
               type: ProjectContentType.gallery,
-              title: 'App Screenshots Gallery',
+              title: ProjectTitles.appScreenshotsGallery,
               imageUrls: [
                 'images/ntc_home.png',
                 'images/ntc_settings.png',
@@ -79,17 +79,16 @@ class ProjectData {
       ],
     ),
     ProjectCategory(
-      title: 'Web Applications',
+      title: ProjectTitles.webApplicationsCategory,
       projects: [
         ProjectModel(
-          title: 'Portfolio Website',
+          title: ProjectTitles.portfolioWebsite,
           description:
               'Personal portfolio website built with responsive design and modern animations',
           technologies: 'Dart, Flutter Web, Responsive Framework',
           imageUrl: 'images/flutter-banner.png',
           status: 'Completed',
-          sourceUrl:
-              'https://github.com/LiERN04/my_portfolio',
+          sourceUrl: 'https://github.com/LiERN04/my_portfolio',
           techStack: [
             'Flutter Web',
             'Dart',
@@ -100,26 +99,26 @@ class ProjectData {
           ],
           features: [
             ProjectFeature(
-              title: 'Responsive Design',
+              title: ProjectTitles.responsiveDesign,
               description:
                   'Seamless experience across desktop, tablet, and mobile',
               icon: 'devices',
             ),
             ProjectFeature(
-              title: 'Smooth Animations',
+              title: ProjectTitles.smoothAnimations,
               description:
                   'Engaging scroll-triggered animations and transitions',
               icon: 'animation',
             ),
             ProjectFeature(
-              title: 'Modern UI',
+              title: ProjectTitles.modernUI,
               description: 'Clean, professional design with Material 3',
               icon: 'palette',
             ),
           ],
         ),
         ProjectModel(
-          title: 'Final Year Project (Customizable AI Chatbot)',
+          title: ProjectTitles.finalYearProject,
           description:
               'A comprehensive web application that allows users to build custom chatbots with their own training data',
           technologies: 'React, Flask, Supabase',
@@ -139,18 +138,18 @@ class ProjectData {
           ],
           features: [
             ProjectFeature(
-              title: 'Custom Training Data',
+              title: ProjectTitles.customTrainingData,
               description:
                   'Upload and manage custom datasets for chatbot training',
               icon: 'cloud_upload',
             ),
             ProjectFeature(
-              title: 'Embeddable Widget',
+              title: ProjectTitles.embeddableWidget,
               description: 'Generate embeddable chat widgets for websites',
               icon: 'integration_instructions',
             ),
             ProjectFeature(
-              title: 'Real-time Analytics',
+              title: ProjectTitles.realtimeAnalytics,
               description: 'Monitor chatbot performance and user interactions',
               icon: 'analytics',
             ),
@@ -158,13 +157,13 @@ class ProjectData {
           detailedContent: [
             ProjectContent(
               type: ProjectContentType.text,
-              title: 'Project Background',
+              title: ProjectTitles.projectBackground,
               content:
                   'This final year project addresses the growing need for customizable AI chatbots in business. The platform allows users to create intelligent chatbots trained on their specific data, making AI accessible to businesses without technical expertise.',
             ),
             ProjectContent(
               type: ProjectContentType.image,
-              title: 'Dashboard Interface',
+              title: ProjectTitles.dashboardInterface,
               imageUrl: 'images/gasy-banner.png',
               caption:
                   'Main dashboard showing chatbot management and analytics',

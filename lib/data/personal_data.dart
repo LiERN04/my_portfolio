@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/data/models/skill_model.dart';
 import 'package:portfolio/data/models/experience_model.dart';
 import 'package:portfolio/data/models/academic_model.dart';
+import 'package:portfolio/data/constants/project_titles.dart';
 
 class PersonalData {
   static const List<ExperienceModel> experiences = [
@@ -78,7 +79,11 @@ class PersonalData {
         'Reactive UI',
       ],
       experience: '1+ years',
-      relatedProjectTitles: ['Portfolio Website', 'NutriCoach Health App'],
+      relatedProjectTitles: [
+        ProjectTitles.portfolioWebsite,
+        ProjectTitles.nutricoachHealthApp,
+        ProjectTitles.finalYearProject,
+      ],
     ),
     SkillModel.withMaterialIcon(
       iconData: Icons.mobile_friendly_rounded,
@@ -99,7 +104,10 @@ class PersonalData {
         'State Management',
       ],
       experience: '1+ years',
-      relatedProjectTitles: ['NutriCoach Health App'],
+      relatedProjectTitles: [
+        ProjectTitles.nutricoachHealthApp,
+        ProjectTitles.portfolioWebsite,
+      ],
     ),
     SkillModel.withMaterialIcon(
       iconData: Icons.api_rounded,
@@ -108,6 +116,10 @@ class PersonalData {
       proficiency: 80,
       technologies: ['Flask', 'SpringBoot', 'PostgreSQL', 'API Development'],
       experience: '3+ years',
+      relatedProjectTitles: [
+        ProjectTitles.finalYearProject,
+        ProjectTitles.nutricoachHealthApp,
+      ],
     ),
     SkillModel.withMaterialIcon(
       iconData: Icons.layers_rounded,
@@ -118,8 +130,8 @@ class PersonalData {
       technologies: ['NodeJS', 'Flask', 'AWS', 'Supabase', 'Unit Testing'],
       experience: '1+ years',
       relatedProjectTitles: [
-        'Final Year Project (Customizable AI Chatbot)',
-        'Portfolio Website',
+        ProjectTitles.finalYearProject,
+        ProjectTitles.portfolioWebsite,
       ],
     ),
   ];

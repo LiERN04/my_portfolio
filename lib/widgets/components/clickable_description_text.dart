@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/data/project_data.dart';
+import 'package:portfolio/data/constants/project_titles.dart';
 
 class ClickableDescriptionText extends StatelessWidget {
   final String description;
@@ -22,7 +23,7 @@ class ClickableDescriptionText extends StatelessWidget {
         .expand((category) => category.projects)
         .toList();
     final nutricoachIndex = allProjects.indexWhere(
-      (project) => project.title.contains('NutriCoach'),
+      (project) => project.title == ProjectTitles.nutricoachHealthApp,
     );
 
     // Split text to make NutriCoach clickable

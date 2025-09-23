@@ -575,7 +575,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
               }
             },
             icon: const Icon(Icons.arrow_back),
-            label: const Text('Back to Skills'),
+            label: const Text('Back'),
             style: ElevatedButton.styleFrom(
               backgroundColor: colorScheme.primary,
               foregroundColor: colorScheme.onPrimary,

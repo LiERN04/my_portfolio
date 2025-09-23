@@ -872,7 +872,7 @@ class ProjectDetailScreen extends StatelessWidget {
       child: OutlinedButton.icon(
         onPressed: () => context.pop(),
         icon: const Icon(Icons.arrow_back),
-        label: const Text('Back to Portfolio'),
+        label: const Text('Back'),
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         ),

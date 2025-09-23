@@ -429,7 +429,7 @@ class ExperienceDetailScreen extends StatelessWidget {
       child: ElevatedButton.icon(
         onPressed: () => context.pop(),
         icon: const Icon(Icons.arrow_back),
-        label: const Text('Back to Experience'),
+        label: const Text('Back'),
         style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.primary,
           foregroundColor: colorScheme.onPrimary,

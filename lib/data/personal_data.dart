@@ -25,10 +25,10 @@ class PersonalData {
         'Release Pipeline - Participated in deployment processes across multiple environments',
       ],
       achievements: [
-        'Successfully delivered 5+ new features that improved user experience',
-        'Reduced API response time by 20% through optimization',
-        'Contributed to zero-downtime deployment processes',
-        'Mentored by senior engineers in enterprise development practices',
+        'Delivered 5+ new features that significantly enhanced user experience',
+        'Managed the end-to-end release pipeline of an individual project into production',
+        'Contributed to implementing zero-downtime deployment processes',
+        'Collaborated with cross-border colleagues to coordinate database alterations for production releases',
       ],
       technologiesUsed: [
         'Java',
@@ -48,7 +48,7 @@ class PersonalData {
   static const List<AcademicModel> academics = [
     AcademicModel(
       degree: 'Bachelor of Computer Science',
-      institution: 'Monah University Malaysia',
+      institution: 'Monash University Malaysia',
       major: 'Advanced Computer Science',
       year: '2022 - 2025',
       gpa: 'GPA: 3.3/4.0',

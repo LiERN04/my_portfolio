@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import '../data/models/project_model.dart';
 import '../services/url_launcher_service.dart';
+import '../widgets/components/back_button.dart';
 
 class ProjectDetailScreen extends StatelessWidget {
   final ProjectModel project;
@@ -868,16 +869,7 @@ class ProjectDetailScreen extends StatelessWidget {
   }
 
   Widget _buildBackButton(BuildContext context, ColorScheme colorScheme) {
-    return Center(
-      child: OutlinedButton.icon(
-        onPressed: () => context.pop(),
-        icon: const Icon(Icons.arrow_back),
-        label: const Text('Back'),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        ),
-      ),
-    );
+    return const CustomBackButton();
   }
 
   IconData _getIconData(String? iconName) {

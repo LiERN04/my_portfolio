@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:portfolio/data/models/about_me_model.dart';
 
 class AboutMeTab extends StatefulWidget {
   const AboutMeTab({super.key});
@@ -152,7 +153,7 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                                         ),
                                         const SizedBox(width: 6),
                                         Text(
-                                          'Full Stack Developer',
+                                          AboutMeData.data.title,
                                           style: TextStyle(
                                             color: colorScheme.primary,
                                             fontSize: 12,
@@ -171,7 +172,7 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                                       ],
                                     ).createShader(bounds),
                                     child: Text(
-                                      'Passionate Developer',
+                                      AboutMeData.data.subtitle,
                                       style: textTheme.titleLarge?.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -187,9 +188,7 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                           FadeTransition(
                             opacity: _fadeAnimation,
                             child: Text(
-                              'I am a dedicated full-stack developer with a passion for creating innovative solutions. '
-                              'My journey in technology started 3 years ago, and since then, I\'ve been committed to '
-                              'building applications that make a difference.',
+                              AboutMeData.data.description,
                               style: textTheme.bodyLarge?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurface.withOpacity(0.8),
@@ -202,21 +201,22 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                           FadeTransition(
                             opacity: _fadeAnimation,
                             child: Row(
-                              children: [
-                                _buildStatCard(
-                                  context,
-                                  '3+',
-                                  'Years Experience',
-                                ),
-                                const SizedBox(width: 16),
-                                _buildStatCard(
-                                  context,
-                                  '10+',
-                                  'Projects Built',
-                                ),
-                                const SizedBox(width: 16),
-                                _buildStatCard(context, '5+', 'Technologies'),
-                              ],
+                              children: AboutMeData.data.stats
+                                  .asMap()
+                                  .entries
+                                  .expand((entry) {
+                                    final index = entry.key;
+                                    final stat = entry.value;
+                                    return [
+                                      if (index > 0) const SizedBox(width: 16),
+                                      _buildStatCard(
+                                        context,
+                                        stat.value,
+                                        stat.label,
+                                      ),
+                                    ];
+                                  })
+                                  .toList(),
                             ),
                           ),
                           const SizedBox(height: 32),
@@ -246,33 +246,15 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                                 Wrap(
                                   spacing: 8,
                                   runSpacing: 8,
-                                  children: [
-                                    _buildSkillChip(
-                                      context,
-                                      'JavaScript',
-                                      Icons.javascript,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Java',
-                                      Icons.code,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Python',
-                                      Icons.code,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Dart',
-                                      Icons.flutter_dash,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Kotlin',
-                                      Icons.android,
-                                    ),
-                                  ],
+                                  children: AboutMeData.data.languages
+                                      .map(
+                                        (skill) => _buildSkillChip(
+                                          context,
+                                          skill.name,
+                                          skill.icon,
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ],
                             ),
@@ -305,33 +287,15 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                                 Wrap(
                                   spacing: 8,
                                   runSpacing: 8,
-                                  children: [
-                                    _buildSkillChip(
-                                      context,
-                                      'React',
-                                      Icons.web,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Flutter',
-                                      Icons.flutter_dash,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Spring Boot',
-                                      Icons.settings,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Flask',
-                                      Icons.api,
-                                    ),
-                                    _buildSkillChip(
-                                      context,
-                                      'Jetpack Compose',
-                                      Icons.android,
-                                    ),
-                                  ],
+                                  children: AboutMeData.data.frameworks
+                                      .map(
+                                        (skill) => _buildSkillChip(
+                                          context,
+                                          skill.name,
+                                          skill.icon,
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ],
                             ),
@@ -389,7 +353,7 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(16),
                                   child: Image.asset(
-                                    'images/portrait.jpg',
+                                    AboutMeData.data.profileImagePath,
                                     fit: BoxFit.cover,
                                     errorBuilder: (context, error, stackTrace) {
                                       return Container(

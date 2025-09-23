@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../data/models/skill_model.dart';
 import '../data/project_data.dart';
 import '../widgets/components/clickable_description_text.dart';
+import '../widgets/components/back_button.dart';
 
 class SkillDetailScreen extends StatefulWidget {
   final SkillModel skill;
@@ -563,29 +564,10 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
   }
 
   Widget _buildActionButtons(ColorScheme colorScheme, TextTheme textTheme) {
-    return Row(
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(
-          child: ElevatedButton.icon(
-            onPressed: () {
-              if (context.canPop()) {
-                context.pop();
-              } else {
-                context.go('/');
-              }
-            },
-            icon: const Icon(Icons.arrow_back),
-            label: const Text('Back'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-          ),
-        ),
+        CustomBackButton(),
       ],
     );
   }

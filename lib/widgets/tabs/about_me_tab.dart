@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:portfolio/data/models/about_me_model.dart';
+import '../components/clickable_description_text.dart';
 
 class AboutMeTab extends StatefulWidget {
   const AboutMeTab({super.key});
@@ -178,17 +179,15 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                           const SizedBox(height: 16),
                           FadeTransition(
                             opacity: _fadeAnimation,
-                            child: Text(
-                              AboutMeData.data.description,
-                              style: textTheme.bodyLarge?.copyWith(
+                            child: ClickableDescriptionText(
+                              description: AboutMeData.data.description,
+                              textStyle: textTheme.bodyLarge?.copyWith(
                                 height: 1.6,
                                 color: colorScheme.onSurface.withOpacity(0.8),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 24),
-
-                          // Quick Stats Row
+                          const SizedBox(height: 24), // Quick Stats Row
                           FadeTransition(
                             opacity: _fadeAnimation,
                             child: Row(

@@ -11,7 +11,7 @@ class ProjectData {
           description:
               'NutriCoach is a nutrition-tracking Android application that demonstrates modern mobile development practices. The project highlights my ability to build scalable, maintainable, and user-friendly mobile apps by following clean architecture principles, ensuring robust state management, and integrating persistent storage and API communication.',
           technologies: 'Kotlin, Jetpack Compose, MVVM, Room, Retrofit',
-          imageUrl: 'images/nutricoach.png',
+          imageUrl: 'assets/images/nutricoach.png',
           status: 'Completed',
           demoUrl: "https://github.com/LiERN04/nutricoach",
           sourceUrl: 'https://github.com/LiERN04/nutricoach',
@@ -58,10 +58,10 @@ class ProjectData {
               type: ProjectContentType.gallery,
               title: ProjectTitles.appScreenshotsGallery,
               imageUrls: [
-                'images/ntc_home.png',
-                'images/ntc_settings.png',
-                'images/ntc_login.png',
-                'images/mockup.png',
+                'assets/images/ntc_home.png',
+                'assets/images/ntc_settings.png',
+                'assets/images/ntc_login.png',
+                'assets/images/mockup.png',
               ],
               imageCaptions: [
                 'Home Screen',
@@ -86,7 +86,7 @@ class ProjectData {
           description:
               'Personal portfolio website built with responsive design and modern animations',
           technologies: 'Dart, Flutter Web, Responsive Framework',
-          imageUrl: 'images/flutter-banner.png',
+          imageUrl: 'assets/images/flutter-banner.png',
           status: 'Completed',
           sourceUrl: 'https://github.com/LiERN04/my_portfolio',
           techStack: [
@@ -122,7 +122,7 @@ class ProjectData {
           description:
               'A comprehensive web application that allows users to build custom chatbots with their own training data',
           technologies: 'React, Flask, Supabase',
-          imageUrl: 'images/gasy-banner.png',
+          imageUrl: 'assets/images/gasy-banner.png',
           status: 'Completed',
           sourceUrl:
               'https://github.com/yourusername/ai-chatbot-platform', // Add your actual GitHub URL
@@ -164,35 +164,35 @@ class ProjectData {
             ProjectContent(
               type: ProjectContentType.image,
               title: ProjectTitles.dashboardInterface,
-              imageUrl: 'images/gasy_bot_dashboard.png',
+              imageUrl: 'assets/images/gasy_bot_dashboard.png',
               caption:
                   'Main dashboard showing chatbot management and analytics',
             ),
             ProjectContent(
               type: ProjectContentType.image,
               title: 'Bot Creation Interface',
-              imageUrl: 'images/create_bot.png',
+              imageUrl: 'assets/images/create_bot.png',
               caption:
                   'Intuitive bot creation wizard for setting up custom chatbots with training data',
             ),
             ProjectContent(
               type: ProjectContentType.image,
               title: 'Bot Management View',
-              imageUrl: 'images/view_bots.png',
+              imageUrl: 'assets/images/view_bots.png',
               caption:
                   'Comprehensive bot management interface showing all created chatbots with performance metrics',
             ),
             ProjectContent(
               type: ProjectContentType.image,
               title: 'Live Chat Interface',
-              imageUrl: 'images/chat.png',
+              imageUrl: 'assets/images/chat.png',
               caption:
                   'Real-time chat interface demonstrating the AI chatbot in action with natural conversation flow',
             ),
             ProjectContent(
               type: ProjectContentType.image,
               title: 'Embeddable Widget',
-              imageUrl: 'images/embed.png',
+              imageUrl: 'assets/images/embed.png',
               caption:
                   'Code generation interface for creating embeddable chat widgets for integration into any website',
             ),

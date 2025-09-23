@@ -9,7 +9,7 @@ class PersonalData {
     ExperienceModel(
       position: 'Backend Engineer Intern',
       company: 'Ant International',
-      companyLogo: 'images/ant-logo.png',
+      companyLogo: 'assets/images/ant-logo.png',
       duration: 'Nov 2024 - Feb 2025',
       location: 'Singapore',
       employmentType: 'Internship',
@@ -64,7 +64,7 @@ class PersonalData {
 
   static const List<SkillModel> skills = [
     SkillModel.withImage(
-      imagePath: 'images/react.png',
+      imagePath: 'assets/images/react.png',
       name: 'Frontend UI/UX Development',
       description:
           'Modern responsive web interfaces with great user experience',

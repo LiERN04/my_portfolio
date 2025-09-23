@@ -74,6 +74,6 @@ class AboutMeData {
       AboutMeSkillModel(name: 'Flask', icon: Icons.api),
       AboutMeSkillModel(name: 'Jetpack Compose', icon: Icons.android),
     ],
-    profileImagePath: 'images/portrait.jpg',
+    profileImagePath: 'assets/images/portrait.jpg',
   );
 }

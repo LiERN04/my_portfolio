@@ -164,9 +164,37 @@ class ProjectData {
             ProjectContent(
               type: ProjectContentType.image,
               title: ProjectTitles.dashboardInterface,
-              imageUrl: 'images/gasy-banner.png',
+              imageUrl: 'images/gasy_bot_dashboard.png',
               caption:
                   'Main dashboard showing chatbot management and analytics',
+            ),
+            ProjectContent(
+              type: ProjectContentType.image,
+              title: 'Bot Creation Interface',
+              imageUrl: 'images/create_bot.png',
+              caption:
+                  'Intuitive bot creation wizard for setting up custom chatbots with training data',
+            ),
+            ProjectContent(
+              type: ProjectContentType.image,
+              title: 'Bot Management View',
+              imageUrl: 'images/view_bots.png',
+              caption:
+                  'Comprehensive bot management interface showing all created chatbots with performance metrics',
+            ),
+            ProjectContent(
+              type: ProjectContentType.image,
+              title: 'Live Chat Interface',
+              imageUrl: 'images/chat.png',
+              caption:
+                  'Real-time chat interface demonstrating the AI chatbot in action with natural conversation flow',
+            ),
+            ProjectContent(
+              type: ProjectContentType.image,
+              title: 'Embeddable Widget',
+              imageUrl: 'images/embed.png',
+              caption:
+                  'Code generation interface for creating embeddable chat widgets for integration into any website',
             ),
           ],
           challenges:

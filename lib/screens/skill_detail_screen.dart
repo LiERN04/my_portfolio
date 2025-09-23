@@ -566,9 +566,7 @@ class _SkillDetailScreenState extends State<SkillDetailScreen>
   Widget _buildActionButtons(ColorScheme colorScheme, TextTheme textTheme) {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomBackButton(),
-      ],
+      children: [CustomBackButton()],
     );
   }
 }

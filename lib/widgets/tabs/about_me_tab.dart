@@ -121,47 +121,38 @@ class _AboutMeTabState extends State<AboutMeTab> with TickerProviderStateMixin {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 6,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          colorScheme.primary.withOpacity(0.1),
-                                          colorScheme.secondary.withOpacity(
-                                            0.1,
+                                  Wrap(
+                                    spacing: 8,
+                                    runSpacing: 4,
+                                    children: AboutMeData.data.titles
+                                        .map(
+                                          (title) => Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: colorScheme.primary
+                                                  .withValues(alpha: 0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: colorScheme.primary
+                                                    .withValues(alpha: 0.3),
+                                                width: 1,
+                                              ),
+                                            ),
+                                            child: Text(
+                                              title,
+                                              style: TextStyle(
+                                                color: colorScheme.primary,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: colorScheme.primary.withOpacity(
-                                          0.3,
-                                        ),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.code,
-                                          size: 16,
-                                          color: colorScheme.primary,
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Text(
-                                          AboutMeData.data.title,
-                                          style: TextStyle(
-                                            color: colorScheme.primary,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                        )
+                                        .toList(),
                                   ),
                                   const SizedBox(height: 12),
                                   ShaderMask(

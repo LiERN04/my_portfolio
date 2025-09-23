@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// Model class for About Me content data
 /// This separates the content from the UI presentation
 class AboutMeModel {
-  final String title;
+  final List<String> titles; // Changed from String title to List<String> titles
   final String subtitle;
   final String description;
   final List<StatModel> stats;
@@ -12,7 +12,7 @@ class AboutMeModel {
   final String profileImagePath;
 
   const AboutMeModel({
-    required this.title,
+    required this.titles,
     required this.subtitle,
     required this.description,
     required this.stats,
@@ -41,12 +41,20 @@ class AboutMeSkillModel {
 /// Data class containing all About Me content
 class AboutMeData {
   static const AboutMeModel data = AboutMeModel(
-    title: 'Full Stack Developer',
-    subtitle: 'Passionate Developer',
+    titles: [
+      'Full Stack Developer',
+      'Mobile Developer',
+      'Web Developer',
+      'Frontend Developer',
+      'Backend Developer',
+    ],
+    subtitle: 'Samuel Leong Lik Ern',
     description:
-        'I am a dedicated full-stack developer with a passion for creating innovative solutions. '
-        'My journey in technology started 3 years ago, and since then, I\'ve been committed to '
-        'building applications that make a difference.',
+        'I am a dedicated full-stack developer with a passion for creating intuitive UIs and robust systems. '
+        'My journey in technology began three years ago at Monash University Malaysia, and since then I have been committed '
+        'to building applications that are not only functional but also adhere to industry-leading standards in both design and code quality. '
+        'Along the way, I have faced diverse challenges that helped me gain tremendous experience, including an internship at Ant International, '
+        'where I learned to lead an industrial project. I have also contributed to several projects that allowed me to discover and refine my areas of expertise.',
     stats: [
       StatModel(value: '3+', label: 'Years Experience'),
       StatModel(value: '10+', label: 'Projects Built'),

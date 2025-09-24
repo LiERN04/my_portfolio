@@ -21,12 +21,6 @@ class MobileNavigation extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildNavItem(
-              context,
-              'hero',
-              'Get to know me',
-              Icons.person_outline,
-            ),
             _buildNavItem(context, 'about', 'About Me', Icons.info_outline),
             _buildNavItem(context, 'skills', 'I specialize in', Icons.code),
             _buildNavItem(context, 'projects', 'Projects', Icons.work_outline),

@@ -11,7 +11,7 @@ class PersonalData {
       company: 'Ant International',
       companyLogo: 'assets/images/ant-logo.png',
       duration: 'Nov 2024 - Feb 2025',
-      location: 'Kuala Lumpur',
+      location: 'Kuala Lumpur, Malaysia',
       employmentType: 'Internship',
       description:
           'Gained hands-on experience in enterprise-level software development, working on '

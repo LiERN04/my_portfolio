@@ -9,7 +9,7 @@ class PersonalData {
     ExperienceModel(
       position: 'Backend Engineer Intern',
       company: 'Ant International',
-      companyLogo: 'assets/images/ant-logo.png',
+      companyLogo: 'images/ant-logo.png',
       duration: 'Nov 2024 - Feb 2025',
       location: 'Kuala Lumpur, Malaysia',
       employmentType: 'Internship',

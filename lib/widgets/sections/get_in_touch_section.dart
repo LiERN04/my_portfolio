@@ -87,7 +87,7 @@ class GetInTouchSection extends StatelessWidget {
       {
         'icon': Icons.document_scanner,
         'label': 'Resume',
-        'url': 'assets/documents/resume.txt',
+        'url': 'assets/documents/Lik_Ern_Leong-Software_Engineer.pdf',
         'isDownload': true,
       },
     ];
@@ -163,7 +163,7 @@ class GetInTouchSection extends StatelessWidget {
     return InkWell(
       onTap: () {
         if (isDownload) {
-          UrlLauncherService.downloadAsset(url, 'Resume.pdf');
+          UrlLauncherService.downloadAsset(url, 'Lik_Ern_Leong_Resume.pdf');
         } else {
           UrlLauncherService.openUrl(url);
         }
